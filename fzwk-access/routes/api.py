@@ -5,6 +5,8 @@ from ..controller import app_loop_controller
 
 api_bp=Blueprint('api', __name__, url_prefix='/api')
 
+app_loop_controller = app_loop_controller.AppLoopController()
+
 @api_bp.route('/')
 def api_home():
     """Returns just a 204 code for any api consumer to check for a valid connection."""
@@ -21,5 +23,5 @@ def api_connection():
 
 @api_bp.route('/toggleRunLoop')
 def toggleRunLoop():
-    # TODO: implement toggleRunLoop()
+    app_loop_controller.toggle_app_loop()
     return make_response('', 200)

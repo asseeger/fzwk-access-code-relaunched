@@ -1,6 +1,6 @@
 class AppLoopController(object):
     __instance = None
-    isRunning = None
+    _isRunning = None
 
     def __new__(cls, *args, **kwargs):
         if AppLoopController.__instance is None:
@@ -9,9 +9,15 @@ class AppLoopController(object):
         return AppLoopController.__instance
 
     def start_app_loop(self):
+        self._isRunning = True
         # TODO: implement start_app_loop()
-        pass
 
     def stop_app_loop(self):
+        self._isRunning = False
         # TODO: implement stop_app_loop()
-        pass
+
+    def toggle_app_loop(self):
+        if self._isRunning:
+            self.stop_app_loop()
+        else:
+            self.start_app_loop()
