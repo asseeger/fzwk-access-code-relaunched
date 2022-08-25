@@ -5,6 +5,24 @@ from .routes import api
 
 
 def create_app(test_config=None):
+    from logging.config import dictConfig
+
+    dictConfig({
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': 'INFO',
+            'handlers': ['wsgi']
+        }
+    })
+
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -25,15 +43,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        app.logger.debug('route "/hello" called')
-        return 'Hello, World!'
-
     from . import db
     db.init_app(app)
 
+    from .controller import app_loop_controller
+    app_loop_controller.AppLoopController()
+    app.logger.debug('Application Start.')
+
     app.register_blueprint(api.api_bp)
+
+    app.app_context()
 
     return app
