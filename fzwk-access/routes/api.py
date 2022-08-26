@@ -24,3 +24,9 @@ def api_connection():
 def toggleRunLoop():
     app_loop_controller.toggle_app_loop()
     return make_response('', 200)
+
+@api_bp.route('test')
+def test():
+    person_id = db_controller.is_badge_valid(1571256063040)
+    current_app.logger.debug(f'Person Id is:{person_id}')
+    return str(person_id)

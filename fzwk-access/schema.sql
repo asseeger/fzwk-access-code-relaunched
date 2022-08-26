@@ -14,12 +14,6 @@ DROP TABLE IF EXISTS badge;
 DROP TABLE IF EXISTS person_badge;
 DROP TABLE IF EXISTS logEntry;
 
--- [Key-Value-Store] --
-CREATE TABLE key_value_store (
-  key TEXT PRIMARY KEY,
-  value TEXT
-);
-
 -- [Person] --
 CREATE TABLE person (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

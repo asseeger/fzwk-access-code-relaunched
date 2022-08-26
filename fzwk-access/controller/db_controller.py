@@ -25,9 +25,11 @@ def set_is_app_loop_running(is_running: bool):
     with dbm.open(_dbm_store_location, 'c') as dbms:
         dbms[_is_app_loop_running_literal] = str(is_running)
 
+
 def get_is_relay_switched_on():
     with dbm.open(_dbm_store_location) as dbms:
         return eval(dbms.get(_is_relay_switched_on_literal))
+
 
 def set_is_relay_switched_on(is_switched_on: bool):
     with dbm.open(_dbm_store_location, 'c') as dbms:
@@ -73,8 +75,14 @@ def init_app(app):
 
 def is_badge_valid(badge_id):
     """Checks whether the given badge has access and returns the badge's person id if it has."""
-    # TODO: implement the query
-    pass
+    cursor = get_db().cursor()
+    query = """
+            SELECT personId FROM person_badge WHERE badgeId = {}
+            """.format(badge_id)
+    row = cursor.execute(query).fetchone()
+    if row != None:
+        person_id = row['personId']
+        return person_id  # might be none if not found
 
 
 def get_current_badge():
