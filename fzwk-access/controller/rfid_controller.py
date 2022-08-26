@@ -1,35 +1,23 @@
 from flask import Flask, current_app as app
 from . import db_controller
 
+app = Flask(__name__)
+
 try:
     import RPi.GPIO as Gpio
 except ModuleNotFoundError:
-    testing_mode = True
+    dev_mode = True
     app.logger.debug('RPi-Module not found–we are in dev mode.')
 
-app = Flask(__name__)
+
 
 relay_pin = 16
-Gpio.setup(relay_pin, Gpio.OUT)
+if not dev_mode:
+    Gpio.setup(relay_pin, Gpio.OUT)
+    from ..resources import SimpleMFRC522
+    reader = SimpleMFRC522.SimpleMFRC522()
 
 
-def is_switched_on():
-    return g.relay_is_switched_on
-
-
-def switch_on():
-    app.logger.debug('Switching ON')
-    if not testing_mode:
-        Gpio.output(relay_pin, Gpio.LOW)
-    else:
-        app.logger.debug('We are in dev mode.')
-    db_controller.set_is_relay_switched_on(True)
-
-
-def switch_off():
-    if not testing_mode:
-        app.logger.debug('Switching OFF')
-        Gpio.output(relay_pin, Gpio.HIGH)
-    else:
-        app.logger.debug('We are in dev mode.')
-    db_controller.set_is_relay_switched_on(False)
+def read_badge():
+    if not dev_mode:
+        return reader.read_id_no_block()
