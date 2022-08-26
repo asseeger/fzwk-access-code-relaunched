@@ -72,3 +72,15 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
     """
     current_app.logger.debug(f'The script is: {script}')
     cursor.executescript(script)
+
+
+def fetch_badges():
+    """Returns all badges found in the db"""
+    cursor = get_db().cursor()
+    query = """
+    SELECT * FROM badge
+    """
+    result = cursor.execute(query).fetchall()
+    result = [dict(row) for row in result]
+    current_app.logger.debug(f"Query result is: {result}")
+    return result

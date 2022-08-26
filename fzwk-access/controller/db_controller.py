@@ -15,16 +15,16 @@ def init_app(app):
 
 
 def is_badge_valid(badge_id):
-    """Checks whether the given badge has access and returns the badge's person id if it has."""
-    cursor = get_db().cursor()
-    query = """
-            SELECT personId FROM person_badge WHERE badgeId = {}
-            """.format(badge_id)
-    row = cursor.execute(query).fetchone()
-    if row != None:
-        person_id = row['personId']
-        return person_id  # might be none if not found
+    return _db_sqlite.is_badge_valid((badge_id))
 
+
+def insert_new_badge(badge_id, number: int, first_name, last_name):
+    _db_sqlite.insert_new_badge(badge_id, number, first_name, last_name)
+
+
+def fetch_badges():
+    current_app.logger.debug('Fetch Badges')
+    return _db_sqlite.fetch_badges()
 
 # ### dbm access ###
 
@@ -67,7 +67,3 @@ def get_is_in_admin_mode():
 
 def set_is_in_admin_mode(set_to: bool):
     _db_dbms.set_is_in_admin_mode(set_to)
-
-
-def insert_new_badge(badge_id, number: int, first_name, last_name):
-    _db_sqlite.insert_new_badge(badge_id, number, first_name, last_name)

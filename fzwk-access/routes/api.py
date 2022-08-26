@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, current_app, render_template, abort, redirect, request, make_response, jsonify
 from jinja2 import TemplateNotFound
 
@@ -61,3 +63,11 @@ def insert_badge():
 
     db_controller.insert_new_badge(badge_id, number, first_name, last_name)
     return make_response('', 204)
+
+@api_bp.route('badge')
+def badge():
+    current_app.logger.debug(f"Calling /badge")
+    content = db_controller.fetch_badges()
+    json_content = json.dumps(content)
+    current_app.logger.debug(f"Content is: {json_content}")
+    return jsonify(content)
