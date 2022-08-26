@@ -9,12 +9,6 @@ except ModuleNotFoundError:
 
 app = Flask(__name__)
 
-##################################################################################################################
-# TODO: g komplett vergessen–in meinem UseCase muss ich den Status des Controllers in der db speichern!!!!!
-##################################################################################################################
-
-# g = Flask(__name__)
-
 relay_pin = 16
 Gpio.setup(relay_pin, Gpio.OUT)
 
