@@ -67,3 +67,9 @@ def get_is_in_admin_mode():
 
 def set_is_in_admin_mode(set_to: bool):
     _db_dbms.set_is_in_admin_mode(set_to)
+
+def get_is_in_insert_badge_mode():
+    return _db_dbms.get_is_in_insert_badge_mode()
+
+def set_is_in_insert_badge_mode(set_to: bool):
+    _db_dbms.set_is_in_insert_badge_mode(set_to)

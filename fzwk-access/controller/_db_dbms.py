@@ -11,6 +11,11 @@ _is_relay_switched_on_literal: str = 'is_relay_switched_on'
 _current_badge_literal: str = 'current_badge'
 _current_person_literal: str = 'current_person'
 _is_in_admin_mode_literal = 'is_in_admin_mode'
+_is_in_insert_badge_mode_literal = '_is_in_insert_badge_mode'
+
+
+def fetch_dbm():
+    return dbm.open(_dbm_store_location, 'c')
 
 
 def get_is_app_loop_running():
@@ -62,3 +67,13 @@ def get_is_in_admin_mode():
 def set_is_in_admin_mode(set_to: bool):
     with dbm.open(_dbm_store_location, 'c') as dbms:
         dbms[_is_in_admin_mode_literal] = str(set_to)
+
+
+def get_is_in_insert_badge_mode():
+    with fetch_dbm() as dbms:
+        return eval(dbms.get(_is_in_admin_mode_literal))
+
+
+def set_is_in_insert_badge_mode(set_to: bool):
+    with fetch_dbm() as dbms:
+        dbms[_is_in_insert_badge_mode_literal] = str(set_to)
