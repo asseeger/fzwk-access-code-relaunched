@@ -44,3 +44,20 @@ def toggle_admin_mode():
         set_to = True
     db_controller.set_is_in_admin_mode(set_to)
     return make_response('', 204)
+
+
+@api_bp.route('insertBadge', methods=['POST'])
+def insert_badge():
+    if not db_controller.get_is_in_admin_mode():
+        return make_response('Der Server ist nicht im Admin-Modus.', 400)
+
+    content = request.json
+    current_app.logger.debug(f"Received json with content: {content}")
+
+    badge_id = content['badgeId']
+    first_name = content['firstName']
+    last_name = content['lastName']
+    number = content['number']
+
+    db_controller.insert_new_badge(badge_id, number, first_name, last_name)
+    return make_response('', 204)

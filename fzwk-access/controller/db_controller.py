@@ -117,3 +117,15 @@ def set_is_in_admin_mode(set_to: bool):
         dbms[_is_in_admin_mode_literal] = str(set_to)
 
 
+def insert_new_badge(badge_id, number: int, first_name, last_name):
+    """Insert the given badge into the table as allowed. Also registers the given persn."""
+    cursor = get_db().cursor()
+    script = f"""
+    INSERT INTO badge (id,  isAssigned, number) VALUES ({badge_id}, True, {number});
+    INSERT INTO person (firstname, lastname) VALUES ("{first_name}", "{last_name}");
+    INSERT INTO person_badge VALUES
+           ( (SELECT id FROM person WHERE firstname = "{first_name}" AND lastname = "{last_name}"),
+            {badge_id});
+    """
+    current_app.logger.debug(f'The script is: {script}')
+    cursor.executescript(script)

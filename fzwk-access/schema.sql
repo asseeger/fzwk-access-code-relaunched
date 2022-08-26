@@ -30,7 +30,7 @@ INSERT INTO person (firstname, lastname) VALUES
 
 -- [Badge] --
 CREATE TABLE badge (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, -- using existing badge id as the main id of this table
+  id INTEGER PRIMARY KEY, -- using existing badge id as the main id of this table
   isAssigned BOOLEAN NOT NULL CHECK (isAssigned IN (0, 1)), --hacking BOOLEAN as there is no BOOL in SQLITE...
   number INTEGER UNIQUE NOT NULL,
   lastDistribution NOT NULL DEFAULT CURRENT_TIMESTAMP
