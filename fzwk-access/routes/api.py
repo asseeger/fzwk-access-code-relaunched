@@ -1,11 +1,9 @@
 from flask import Blueprint, current_app, render_template, abort, redirect, request, make_response, jsonify
 from jinja2 import TemplateNotFound
 
-from ..controller import app_loop_controller
+from ..controller import app_loop_controller, db_controller
 
-api_bp=Blueprint('api', __name__, url_prefix='/api')
-
-app_loop_controller = app_loop_controller.AppLoopController()
+api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 @api_bp.route('/')
 def api_home():
@@ -19,7 +17,8 @@ def api_connection():
     also returns the current status of the run loop.
     """
     # TODO: return the current run_loop_status here.
-    return make_response(jsonify(runLoopStatus=True), 200)
+    is_app_run_loop_running = db_controller.get_is_app_loop_running()
+    return make_response(jsonify(runLoopStatus=is_app_run_loop_running), 200)
 
 @api_bp.route('/toggleRunLoop')
 def toggleRunLoop():

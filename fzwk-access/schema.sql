@@ -8,10 +8,17 @@ Version History:
 
 */
 
+DROP TABLE IF EXISTS key_value_store;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS badge;
 DROP TABLE IF EXISTS person_badge;
 DROP TABLE IF EXISTS logEntry;
+
+-- [Key-Value-Store] --
+CREATE TABLE key_value_store (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
 
 -- [Person] --
 CREATE TABLE person (
