@@ -86,7 +86,7 @@ def is_badge_valid(badge_id):
 
 
 def get_current_badge():
-    with dbm.open(_dbm_store_location, 'c') as dbms:
+    with dbm.open(_dbm_store_location) as dbms:
         return dbms.get(_current_badge_literal)
 
 
@@ -96,10 +96,24 @@ def set_current_badge(badge_id):
 
 
 def get_current_person():
-    with dbm.open(_dbm_store_location, 'c') as dbms:
+    with dbm.open(_dbm_store_location) as dbms:
         return dbms.get(_current_person_literal)
 
 
 def set_current_person(person_id):
     with dbm.open(_dbm_store_location, 'c') as dbms:
         dbms[_current_person_literal] = person_id
+
+
+_is_in_admin_mode_literal = 'is_in_admin_mode'
+def get_is_in_admin_mode():
+    with dbm.open(_dbm_store_location) as dbms:
+        is_in_admin_mode = eval(dbms.get(_is_in_admin_mode_literal))
+        return is_in_admin_mode
+
+
+def set_is_in_admin_mode(set_to: bool):
+    with dbm.open(_dbm_store_location, 'c') as dbms:
+        dbms[_is_in_admin_mode_literal] = str(set_to)
+
+
