@@ -60,6 +60,10 @@ def is_badge_valid(badge_id):
         return person_id  # might be none if not found
 
 
+def log_to_database(message, person_id, badge_id):
+    pass
+    # TODO: impletent log message to db
+
 def insert_new_badge(badge_id, number: int, first_name, last_name):
     """Insert the given badge into the table as allowed. Also registers the given persn."""
     cursor = get_db().cursor()

@@ -54,6 +54,12 @@ def toggle_admin_mode():
     return make_response(jsonify(fetch_current_state()), 200)
 
 
+@api_bp.route('toggleRelaySwitchedOn')
+def toggle_relay_is_switched_on():
+    # TODO: implement switching on an off
+    return make_response('Implementation missing', 200)
+
+
 @api_bp.route('toggleInsertBadgeMode')
 def toggle_insert_badge_mode():
     if db_controller.get_is_in_insert_badge_mode():
