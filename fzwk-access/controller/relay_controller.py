@@ -12,6 +12,13 @@ def is_switched_on():
     return g.relay_is_switched_on
 
 
+def toggle_switch():
+    if is_switched_on():
+        switch_off()
+    else:
+        switch_on()
+
+
 def switch_on():
     app.logger.debug('Switching ON')
     if not testing_mode:

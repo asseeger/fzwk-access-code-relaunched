@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, current_app, render_template, abort, redirect, request, make_response, jsonify
 from jinja2 import TemplateNotFound
 
-from ..controller import app_loop_controller, db_controller
+from ..controller import app_loop_controller, db_controller, relay_controller
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -56,7 +56,7 @@ def toggle_admin_mode():
 
 @api_bp.route('toggleRelaySwitchedOn')
 def toggle_relay_is_switched_on():
-    # TODO: implement switching on an off
+    relay_controller.toggle_switch()
     return make_response('Implementation missing', 200)
 
 
