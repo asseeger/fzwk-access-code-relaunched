@@ -37,11 +37,19 @@ def toggleRunLoop():
     return make_response(jsonify(fetch_current_state()), 200)
 
 
-@api_bp.route('test')
+@api_bp.route('test', methods=['POST'])
 def test():
-    person_id = db_controller.is_badge_valid(1571256063040)
-    current_app.logger.debug(f'Person Id is:{person_id}')
-    return str(person_id)
+    content = request.json
+    current_app.logger.debug(f"Received json with content: {content}")
+
+    message = content['message']
+    person_id = content['personId']
+    badge_id = content['badgeId']
+    current_app.logger.debug(f"Message: {message}, personId: {person_id}, badgeId: {badge_id}")
+
+    db_controller.log_to_database(message, person_id, badge_id)
+
+    return  make_response('', 204)
 
 
 @api_bp.route('toggleAdminMode')
@@ -89,10 +97,27 @@ def insert_badge():
     db_controller.insert_new_badge(badge_id, number, first_name, last_name)
     return make_response('', 204)
 
-@api_bp.route('badge')
-def badge():
-    current_app.logger.debug(f"Calling /badge")
-    content = db_controller.fetch_badges()
-    json_content = json.dumps(content)
-    current_app.logger.debug(f"Content is: {json_content}")
-    return jsonify(content)
+
+@api_bp.route('/badg<path:suffix>')
+def badge(suffix):
+    """
+    Implements the /badge* family
+    :param suffix: the suffix to /badge
+    :return: json response with according http code
+    """
+    current_app.logger.debug(f'Suffix is {suffix}')
+    current_app.logger.debug(f"Calling /badge{suffix}")
+    if suffix == 'es':
+        content = db_controller.fetch_badges()
+        json_content = json.dumps(content)
+        current_app.logger.debug(f"Content is: {json_content}")
+        return jsonify(content)
+    elif suffix == 'e':
+        current_badge = db_controller.get_current_badge()
+        current_app.logger.debug(f'Current badge is: {current_badge}')
+        response = {
+            "current_badge": current_badge
+        }
+        return make_response(jsonify(response), 200)
+    else:
+        return make_response(f'Route /badge{suffix} is not implemented.', 404)

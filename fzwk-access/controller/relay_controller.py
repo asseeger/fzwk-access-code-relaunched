@@ -35,3 +35,6 @@ def switch_off():
     else:
         app.logger.debug('We are in dev mode.')
     db_controller.set_is_relay_switched_on(False)
+
+
+# def toggle_admin_mode

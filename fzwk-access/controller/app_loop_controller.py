@@ -32,23 +32,23 @@ def toggle_app_loop():
         start_app_loop()
 
 
-def enter_admin_mode():
+def toggle_admin_mode():
     """Entering a mode to read in a badge that is currently not registered in order to connect it with a person."""
     app.logger.debug('Entering admin mode.')
-    # TODO: start reading in badges that get connected
+    if db_controller.get_is_app_loop_running():
+        stop_app_loop()
 
 
 def app_loop():
     while True:
-        badge_id = rfid_controller.read_badge()
-        if badge_id == None:
-            app.logger.debug('No chip present.')
+        badge_id = read_badge()
+        if badge_id is None:
             if relay_controller.is_switched_on():
                 relay_controller.switch_off()
                 # TODO: write **db** log that badge was removed (person stopped using the machine)
         else:
             person_id = db_controller.is_badge_valid(badge_id)
-            if person_id != None:
+            if person_id is not None:
                 db_controller.set_current_badge(badge_id)
                 db_controller.set_current_person(person_id)
                 # TODO: write **db** log that badge was inserted with badge_id and person_id, activating the machine.
@@ -56,3 +56,23 @@ def app_loop():
             else:
                 relay_controller.switch_off()
         time.sleep(1)
+
+
+
+def read_badge():
+    badge_id = rfid_controller.read_badge()
+    if badge_id is None:
+        app.logger.debug('No chip present.')
+        return None
+    else:
+        return badge_id
+
+
+def read_badge_mode():
+    while True:
+        badge_id = read_badge()
+        if badge_id is not None:
+            db_controller.set_current_badge(badge_id)
+        time.sleep(1)
+
+

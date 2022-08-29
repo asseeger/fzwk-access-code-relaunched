@@ -3,9 +3,6 @@ The db controller gives access to the persistent sqlite db
 and the dbm key-value store to represent the runtime states.
 """
 
-import sqlite3
-
-import click
 from flask import current_app, g
 from . import _db_sqlite, _db_dbms
 
@@ -25,6 +22,11 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
 def fetch_badges():
     current_app.logger.debug('Fetch Badges')
     return _db_sqlite.fetch_badges()
+
+
+def log_to_database(message, person_id, badge_id):
+    current_app.logger.debug(f"Message: {message}, personId: {person_id}, badgeId: {badge_id}")
+    _db_sqlite.log_to_database(message, person_id, badge_id)
 
 # ### dbm access ###
 
