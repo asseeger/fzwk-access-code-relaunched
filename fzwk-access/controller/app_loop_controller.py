@@ -45,16 +45,19 @@ def app_loop():
         if badge_id is None:
             if relay_controller.is_switched_on():
                 relay_controller.switch_off()
-                # TODO: write **db** log that badge was removed (person stopped using the machine)
+                current_badge_id = db_controller.get_current_badge()
+                current_person_id = db_controller.get_current_person()
+                db_controller.log_to_database('Badge was removed, switching off.', current_person_id, current_badge_id)
         else:
             person_id = db_controller.is_badge_valid(badge_id)
             if person_id is not None:
                 db_controller.set_current_badge(badge_id)
                 db_controller.set_current_person(person_id)
-                # TODO: write **db** log that badge was inserted with badge_id and person_id, activating the machine.
+                db_controller.log_to_database('Badge was inserted, switching on.', badge_id, person_id)
                 relay_controller.switch_on()
             else:
                 relay_controller.switch_off()
+                db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
         time.sleep(1)
 
 
