@@ -14,7 +14,9 @@ else:
     relay_pin = 16
     Gpio.setmode(Gpio.BCM)
     Gpio.setup(relay_pin, Gpio.OUT)
-
+finally:
+    if not testing_mode:
+        Gpio.cleanup()
 
 
 def is_switched_on():
