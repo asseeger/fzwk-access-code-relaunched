@@ -20,7 +20,8 @@ def fetch_dbm():
 
 def get_is_app_loop_running():
     with dbm.open(_dbm_store_location) as dbms:
-        return eval(dbms.get(_is_app_loop_running_literal))
+        is_app_loop_running = (dbms.get(_is_app_loop_running_literal) == 1)
+        return is_app_loop_running
 
 
 def set_is_app_loop_running(is_running: bool):
@@ -30,7 +31,8 @@ def set_is_app_loop_running(is_running: bool):
 
 def get_is_relay_switched_on():
     with dbm.open(_dbm_store_location) as dbms:
-        return eval(dbms.get(_is_relay_switched_on_literal))
+        is_relay_switched_on = (dbms.get(_is_relay_switched_on_literal) == 1)
+        return is_relay_switched_on
 
 
 def set_is_relay_switched_on(is_switched_on: bool):
