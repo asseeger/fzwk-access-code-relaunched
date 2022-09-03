@@ -24,10 +24,12 @@ def is_switched_on():
 
 
 def toggle_switch():
-    current_app.logger.debug('toggle_switch()')
+    current_app.logger.debug('toggle_switch(): Entering')
     if is_switched_on():
+        current_app.logger.debug('toggle_switch(): switching off')
         switch_off()
     else:
+        current_app.logger.debug('toggle_switch(): switching on')
         switch_on()
 
 
