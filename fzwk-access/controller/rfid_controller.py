@@ -4,7 +4,7 @@ from . import db_controller
 app = Flask(__name__)
 
 try:
-    import RPi.GPIO as Gpio
+    import RPi.GPIO as GPIO
 except ModuleNotFoundError:
     dev_mode = True
     app.logger.debug('RPi-Module not found–we are in dev mode.')
@@ -15,7 +15,8 @@ relay_pin = 16
 
 
 if not dev_mode:
-    Gpio.setup(relay_pin, Gpio.OUT)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(relay_pin, GPIO.OUT)
     from ..resources import SimpleMFRC522
     reader = SimpleMFRC522.SimpleMFRC522()
 
