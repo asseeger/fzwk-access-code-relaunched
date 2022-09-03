@@ -91,6 +91,7 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
 def fetch_badges():
     """Returns all badges found in the db"""
     cursor = get_db().cursor()
+    # TODO: change this query to fetch currently active badges _with_ the attached person's name
     query = """
     SELECT * FROM badge
     """
