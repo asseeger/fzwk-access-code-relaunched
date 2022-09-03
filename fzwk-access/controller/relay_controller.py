@@ -41,6 +41,7 @@ def switch_on():
 
 
 def switch_off():
+    app.logger.debug('switch_off(): Switching OFF')
     if not testing_mode:
         app.logger.debug('switch_off(): Switching OFF')
         Gpio.output(relay_pin, Gpio.HIGH)
