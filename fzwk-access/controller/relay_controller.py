@@ -11,6 +11,7 @@ except ModuleNotFoundError:
 else:
     testing_mode = False
     relay_pin = 16
+    Gpio.setmode(Gpio.BCM)
     Gpio.setup(relay_pin, Gpio.OUT)
 
 
