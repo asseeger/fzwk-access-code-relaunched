@@ -20,11 +20,14 @@ finally:
 
 
 def is_switched_on():
-    return db_controller.get_is_relay_switched_on()
+    current_app.logger.debug('is_switched_on(): entering')
+    is_relay_switched_on = db_controller.get_is_relay_switched_on()
+    current_app.logger.debug(f'is_switched_on(): {is_relay_switched_on}')
+    return is_relay_switched_on
 
 
 def toggle_switch():
-    current_app.logger.debug('toggle_switch(): Entering')
+    current_app.logger.debug('toggle_switch(): entering')
     if is_switched_on():
         current_app.logger.debug('toggle_switch(): switching off')
         switch_off()
