@@ -30,8 +30,11 @@ def set_is_app_loop_running(is_running: bool):
 
 
 def get_is_relay_switched_on():
+    current_app.logger.debug('get_is_relay_switched_on(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        is_relay_switched_on = (dbms.get(_is_relay_switched_on_literal) == 1)
+        is_relay_switched_on_string = dbms.get(_is_relay_switched_on_literal)
+        current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on = {is_relay_switched_on_string}')
+        is_relay_switched_on = (is_relay_switched_on_string == "1")
         return is_relay_switched_on
 
 
@@ -39,7 +42,8 @@ def set_is_relay_switched_on(is_switched_on: bool):
     current_app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
     with dbm.open(_dbm_store_location, 'c') as dbms:
         current_app.logger.debug('writing to dbm')
-        dbms[_is_relay_switched_on_literal] = int(is_switched_on)
+        is_switched_on_string = str(is_switched_on)
+        dbms[_is_relay_switched_on_literal] = is_switched_on_string
 
 
 def get_current_badge():
