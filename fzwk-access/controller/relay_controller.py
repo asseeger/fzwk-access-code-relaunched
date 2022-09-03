@@ -7,6 +7,11 @@ try:
     import RPi.GPIO as Gpio
 except ModuleNotFoundError:
     app.logger.debug('RPi-Module not found–we are in dev mode.')
+    testing_mode = True
+else:
+    testing_mode = False
+    relay_pin = 16
+
 
 
 def is_switched_on():
