@@ -1,4 +1,4 @@
-from flask import Flask, current_app as app
+from flask import Flask, current_app
 from . import db_controller
 
 app = Flask(__name__)
@@ -19,6 +19,7 @@ def is_switched_on():
 
 
 def toggle_switch():
+    current_app.logger.debug('')
     if is_switched_on():
         switch_off()
     else:

@@ -62,10 +62,11 @@ def toggle_admin_mode():
     return make_response(jsonify(fetch_current_state()), 200)
 
 
-@api_bp.route('toggleRelaySwitchedOn')
+@api_bp.route('toggleRelaySwitch')
 def toggle_relay_is_switched_on():
+    current_app.logger.debug('')
     relay_controller.toggle_switch()
-    return make_response('Implementation missing', 200)
+    return make_response('', 204)
 
 
 @api_bp.route('toggleInsertBadgeMode')
