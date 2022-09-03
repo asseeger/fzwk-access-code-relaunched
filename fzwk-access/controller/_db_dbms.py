@@ -72,8 +72,8 @@ def set_is_in_admin_mode(set_to: bool):
 
 def get_is_in_insert_badge_mode():
     with fetch_dbm() as dbms:
-        return eval(dbms.get(_is_in_admin_mode_literal))
-
+        # return eval(dbms.get(_is_in_admin_mode_literal))
+        return False
 
 def set_is_in_insert_badge_mode(set_to: bool):
     with fetch_dbm() as dbms:
