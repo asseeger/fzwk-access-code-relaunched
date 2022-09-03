@@ -8,10 +8,12 @@ try:
 except ModuleNotFoundError:
     dev_mode = True
     app.logger.debug('RPi-Module not found–we are in dev mode.')
-
-
+else:
+    dev_mode = False
 
 relay_pin = 16
+
+
 if not dev_mode:
     Gpio.setup(relay_pin, Gpio.OUT)
     from ..resources import SimpleMFRC522
