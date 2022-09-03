@@ -18,7 +18,8 @@ def fetch_current_state():
     return {
         'runLoopStatus': bool(db_controller.get_is_app_loop_running()),
         'isInAdminMode': bool(db_controller.get_is_in_admin_mode()),
-        'isInInsertBadgeMode': bool(db_controller.get_is_in_insert_badge_mode())
+        'isInInsertBadgeMode': bool(db_controller.get_is_in_insert_badge_mode()),
+        'isRelaySwitchedOn': bool(db_controller.get_is_relay_switched_on())
     }
 
 
