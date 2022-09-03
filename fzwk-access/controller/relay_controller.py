@@ -1,4 +1,5 @@
 from flask import Flask, current_app as app
+from . import db_controller
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ except ModuleNotFoundError:
 
 
 def is_switched_on():
-    return g.relay_is_switched_on
+    return db_controller.get_is_relay_switched_on()
 
 
 def toggle_switch():
