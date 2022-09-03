@@ -30,6 +30,12 @@ def toggle_switch():
         switch_off()
     else:
         current_app.logger.debug('toggle_switch(): switching on')
+
+        ###Temp. Solution
+        Gpio.output(relay_pin, Gpio.LOW)
+        db_controller.set_is_relay_switched_on(True)
+        ###
+
         switch_on()
 
 
