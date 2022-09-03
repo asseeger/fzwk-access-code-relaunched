@@ -11,6 +11,7 @@ except ModuleNotFoundError:
 else:
     testing_mode = False
     relay_pin = 16
+    Gpio.setup(relay_pin, Gpio.OUT)
 
 
 
@@ -19,7 +20,7 @@ def is_switched_on():
 
 
 def toggle_switch():
-    current_app.logger.debug('')
+    current_app.logger.debug('toggle_switch()')
     if is_switched_on():
         switch_off()
     else:
@@ -27,7 +28,7 @@ def toggle_switch():
 
 
 def switch_on():
-    app.logger.debug('Switching ON')
+    app.logger.debug('switch_on(): Switching ON')
     if not testing_mode:
         Gpio.output(relay_pin, Gpio.LOW)
     else:
@@ -37,7 +38,7 @@ def switch_on():
 
 def switch_off():
     if not testing_mode:
-        app.logger.debug('Switching OFF')
+        app.logger.debug('switch_off(): Switching OFF')
         Gpio.output(relay_pin, Gpio.HIGH)
     else:
         app.logger.debug('We are in dev mode.')
