@@ -9,6 +9,7 @@ except ModuleNotFoundError:
     app.logger.debug('RPi-Module not found–we are in dev mode.')
     testing_mode = True
 else:
+    app.logger.debug('We are on the RPi!!!')
     testing_mode = False
     relay_pin = 16
     Gpio.setmode(Gpio.BCM)
