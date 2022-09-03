@@ -44,6 +44,7 @@ def get_is_relay_switched_on():
 
 
 def set_is_relay_switched_on(is_switched_on: bool):
+    current_app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
     _db_dbms.set_is_relay_switched_on(is_switched_on)
 
 
