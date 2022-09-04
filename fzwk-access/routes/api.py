@@ -15,11 +15,14 @@ def api_home():
 
 
 def fetch_current_state():
+    current_app.logger.debug('fetch_current_state(): entering')
+    is_relay_switched_on = bool(db_controller.get_is_relay_switched_on())
+    current_app.logger.debug(f'is_switched_on: {is_relay_switched_on}')
     return {
         'runLoopStatus': bool(db_controller.get_is_app_loop_running()),
         'isInAdminMode': bool(db_controller.get_is_in_admin_mode()),
         'isInInsertBadgeMode': bool(db_controller.get_is_in_insert_badge_mode()),
-        'isRelaySwitchedOn': bool(db_controller.get_is_relay_switched_on())
+        'isRelaySwitchedOn': is_relay_switched_on
     }
 
 
@@ -29,7 +32,10 @@ def status():
     For consumers to check connectivity with server,
     also returns the current status of the run loop.
     """
-    return make_response(jsonify(fetch_current_state()), 200)
+    current_app.logger.debug('entering')
+    current_state = fetch_current_state()
+    current_app.logger.debug(current_state)
+    return make_response(jsonify(current_state), 200)
 
 
 @api_bp.route('/toggleRunLoop')

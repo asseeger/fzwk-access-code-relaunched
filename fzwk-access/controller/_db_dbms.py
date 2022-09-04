@@ -34,7 +34,8 @@ def get_is_relay_switched_on():
     with dbm.open(_dbm_store_location) as dbms:
         is_relay_switched_on_string = dbms.get(_is_relay_switched_on_literal)
         current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on = {is_relay_switched_on_string}')
-        is_relay_switched_on = (is_relay_switched_on_string == str(b'True'))
+        # is_relay_switched_on = (is_relay_switched_on_string == str(b'True'))
+        is_relay_switched_on = bool(is_relay_switched_on_string)
         return is_relay_switched_on
 
 
