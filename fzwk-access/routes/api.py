@@ -69,6 +69,8 @@ def toggle_admin_mode():
     else:
         set_to = True
     db_controller.set_is_in_admin_mode(set_to)
+    current_app.logger.debug('toggle_admin_mode(): exiting')
+    current_app.logger.debug('****************************')
     return make_response(jsonify(fetch_current_state()), 200)
 
 
