@@ -122,7 +122,13 @@ def set_bool_to_key(value: bool, key: str):
 def get_bool_from_key(key: str):
     with fetch_dbm() as dbms:
         try:
-            value = bool(int(dbms.get(key)))
+            value_from_dbms = dbms.get(key)
+            current_app.logger.debug(f'get_bool_from_key({key}): {value_from_dbms}')
+            value_in_int = int(value_from_dbms)
+            current_app.logger.debug(f'get_bool_from_key({key}): {value_in_int}')
+            value_in_bool = bool(value_in_int)
+            current_app.logger.debug(f'get_bool_from_key({key}): {value_in_bool}')
+            value = value_in_bool
         except TypeError:
             value = False
         except NameError:
