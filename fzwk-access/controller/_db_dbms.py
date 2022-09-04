@@ -92,9 +92,9 @@ def set_is_in_admin_mode(set_to: bool):
 def get_is_in_insert_badge_mode():
     current_app.logger.debug('get_is_in_insert_badge_mode(): entering')
     with fetch_dbm() as dbms:
-        is_in_admin_mode = bool(dbms.get(_is_in_admin_mode_literal))
-        current_app.logger.debug(f'get_is_in_insert_badge_mode(): {is_in_admin_mode}')
-        return is_in_admin_mode
+        is_in_insert_badge_mode = bool(dbms.get(_is_in_insert_badge_mode_literal))
+        current_app.logger.debug(f'get_is_in_insert_badge_mode(): {is_in_insert_badge_mode}')
+        return is_in_insert_badge_mode
 
 def set_is_in_insert_badge_mode(set_to: bool):
     with fetch_dbm() as dbms:
