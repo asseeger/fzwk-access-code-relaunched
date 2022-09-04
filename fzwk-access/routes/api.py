@@ -61,7 +61,10 @@ def test():
 
 @api_bp.route('toggleAdminMode')
 def toggle_admin_mode():
-    if db_controller.get_is_in_admin_mode():
+    current_app.logger.debug('toggle_admin_mode(): entering')
+    is_in_admin_mode = db_controller.get_is_in_admin_mode()
+    current_app.logger.debug(f'toggle_admin_mode(): is_in_admin_mode = {is_in_admin_mode}')
+    if is_in_admin_mode:
         set_to = False
     else:
         set_to = True
