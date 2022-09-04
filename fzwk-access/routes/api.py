@@ -78,7 +78,7 @@ def toggle_admin_mode():
 def toggle_relay_is_switched_on():
     current_app.logger.debug('Entering')
     relay_controller.toggle_switch()
-    return make_response('', 204)
+    return make_response(jsonify(fetch_current_state()), 200)
 
 
 @api_bp.route('toggleInsertBadgeMode')
