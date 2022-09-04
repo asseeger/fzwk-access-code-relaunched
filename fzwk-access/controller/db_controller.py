@@ -3,9 +3,10 @@ The db controller gives access to the persistent sqlite db
 and the dbm key-value store to represent the runtime states.
 """
 
-from flask import current_app
+from flask import Flask, current_app
 from . import _db_sqlite, _db_dbms
 
+app = Flask(__name__)
 
 def init_app(app):
     _db_sqlite.init_app(app)
@@ -20,12 +21,12 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
 
 
 def fetch_badges():
-    current_app.logger.debug('Fetch Badges')
+    app.logger.debug('Fetch Badges')
     return _db_sqlite.fetch_badges()
 
 
 def log_to_database(message, person_id, badge_id):
-    current_app.logger.debug(f"Message: {message}, personId: {person_id}, badgeId: {badge_id}")
+    app.logger.debug(f"Message: {message}, personId: {person_id}, badgeId: {badge_id}")
     _db_sqlite.log_to_database(message, person_id, badge_id)
 
 # ### dbm access ###
@@ -44,7 +45,7 @@ def get_is_relay_switched_on():
 
 
 def set_is_relay_switched_on(is_switched_on: bool):
-    current_app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
+    app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
     _db_dbms.set_is_relay_switched_on(is_switched_on)
 
 
