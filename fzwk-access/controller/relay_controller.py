@@ -7,10 +7,10 @@ app = Flask(__name__)
 try:
     import RPi.GPIO as Gpio
 except ModuleNotFoundError:
-    # current_app.logger.debug('RPi-Module not found–we are in dev mode.')
+    app.logger.debug('RPi-Module not found–we are in dev mode.')
     testing_mode = True
 else:
-    # current_app.logger.debug('We are on the RPi!!!')
+    app.logger.debug('We are on the RPi!!!')
     testing_mode = False
     relay_pin = 16
     Gpio.setmode(Gpio.BCM)
