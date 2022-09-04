@@ -42,7 +42,7 @@ def get_is_relay_switched_on():
         # is_relay_switched_on = bool(is_relay_switched_on_string)
         # current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on = {is_relay_switched_on_string}')
         # return is_relay_switched_on
-    is_relay_switched_on_string = get_bool_from_key(_is_relay_switched_on_literal)
+    is_relay_switched_on = get_bool_from_key(_is_relay_switched_on_literal)
     return is_relay_switched_on
 
 
@@ -124,5 +124,7 @@ def get_bool_from_key(key: str):
         try:
             value = bool(int(dbms.get(key)))
         except TypeError:
+            value = False
+        except NameError:
             value = False
         return value
