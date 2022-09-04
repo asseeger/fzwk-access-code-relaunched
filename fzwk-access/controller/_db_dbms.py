@@ -121,5 +121,8 @@ def set_bool_to_key(value: bool, key: str):
 
 def get_bool_from_key(key: str):
     with fetch_dbm() as dbms:
-        value = bool(int(dbms.get(key)))
+        try:
+            value = bool(int(dbms.get(key)))
+        except TypeError:
+            value = False
         return value
