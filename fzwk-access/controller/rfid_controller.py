@@ -1,5 +1,4 @@
-from flask import Flask, current_app as app
-from . import db_controller
+from flask import Flask, current_app
 
 app = Flask(__name__)
 

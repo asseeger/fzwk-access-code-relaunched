@@ -3,7 +3,7 @@ The db controller gives access to the persistent sqlite db
 and the dbm key-value store to represent the runtime states.
 """
 
-from flask import current_app, g
+from flask import current_app
 from . import _db_sqlite, _db_dbms
 
 
