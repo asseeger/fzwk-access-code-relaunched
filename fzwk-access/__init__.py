@@ -69,4 +69,13 @@ def create_app(test_config=None):
 
     app.app_context()
 
+    import atexit
+    import RPi.GPIO as GPIO
+
+    def cleanup():
+        app.logger.debug('Cleanup')
+        GPIO.cleanup()
+
+    atexit.register(cleanup)
+
     return app
