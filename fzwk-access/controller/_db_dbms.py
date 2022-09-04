@@ -86,7 +86,7 @@ def get_is_in_admin_mode():
 def set_is_in_admin_mode(set_to: bool):
     current_app.logger.debug(f'set_is_in_admin_mode(set_to: {set_to}): entering')
     with dbm.open(_dbm_store_location, 'c') as dbms:
-        dbms[_is_in_admin_mode_literal] = set_to
+        dbms[_is_in_admin_mode_literal] = str(set_to)
 
 
 def get_is_in_insert_badge_mode():
