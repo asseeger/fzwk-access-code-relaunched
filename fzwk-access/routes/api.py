@@ -65,7 +65,7 @@ def toggle_admin_mode():
 
 @api_bp.route('toggleRelaySwitch')
 def toggle_relay_is_switched_on():
-    current_app.logger.debug('')
+    current_app.logger.debug('Entering')
     relay_controller.toggle_switch()
     return make_response('', 204)
 
