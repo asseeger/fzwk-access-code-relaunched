@@ -62,6 +62,9 @@ def create_app(test_config=None):
     app_loop_controller.start_app_loop()
     app.logger.debug('Application Start.')
 
+    from .controller import relay_controller
+    relay_controller.switch_on()
+
     app.register_blueprint(api.api_bp)
 
     app.app_context()
