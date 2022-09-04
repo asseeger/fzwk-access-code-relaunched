@@ -19,8 +19,10 @@ def fetch_dbm():
 
 
 def get_is_app_loop_running():
+    current_app.logger.debug('get_is_app_loop_running(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        is_app_loop_running = (dbms.get(_is_app_loop_running_literal) == 1)
+        is_app_loop_running = bool(dbms.get(_is_app_loop_running_literal))
+        current_app.logger.debug(f'get_is_app_loop_running(): is_app_loop_running = {is_app_loop_running}')
         return is_app_loop_running
 
 
@@ -34,7 +36,6 @@ def get_is_relay_switched_on():
     with dbm.open(_dbm_store_location) as dbms:
         is_relay_switched_on_string = dbms.get(_is_relay_switched_on_literal)
         current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on_string = {is_relay_switched_on_string}')
-        # is_relay_switched_on = (is_relay_switched_on_string == str(b'True'))
         is_relay_switched_on = bool(is_relay_switched_on_string)
         current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on = {is_relay_switched_on_string}')
         return is_relay_switched_on
@@ -49,8 +50,11 @@ def set_is_relay_switched_on(is_switched_on: bool):
 
 
 def get_current_badge():
+    current_app.logger.debug('get_current_badge(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        return dbms.get(_current_badge_literal)
+        current_badge = dbms.get(_current_badge_literal)
+        current_app.logger.debug(f'get_current_badge(): current_badge = {current_badge}')
+        return current_badge
 
 
 def set_current_badge(badge_id):
@@ -59,8 +63,11 @@ def set_current_badge(badge_id):
 
 
 def get_current_person():
+    current_app.logger.debug('get_current_person(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        return dbms.get(_current_person_literal)
+        current_person = dbms.get(_current_person_literal)
+        current_app.logger.debug(f'get_current_badge(): current_person = {current_person}')
+        return current_person
 
 
 def set_current_person(person_id):
@@ -69,8 +76,10 @@ def set_current_person(person_id):
 
 
 def get_is_in_admin_mode():
+    current_app.logger.debug('get_is_in_admin_mode(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        is_in_admin_mode = (dbms.get(_is_in_admin_mode_literal) == 1)
+        is_in_admin_mode = bool(dbms.get(_is_in_admin_mode_literal))
+        current_app.logger.debug(f'get_is_in_admin_mode(): is_in_admin_mode = {is_in_admin_mode}')
         return is_in_admin_mode
 
 
@@ -80,9 +89,11 @@ def set_is_in_admin_mode(set_to: bool):
 
 
 def get_is_in_insert_badge_mode():
+    current_app.logger.debug('get_is_in_insert_badge_mode(): entering')
     with fetch_dbm() as dbms:
-        _is_in_admin_mode = (dbms.get(_is_in_admin_mode_literal) == 1)
-        return _is_in_admin_mode
+        is_in_admin_mode = bool(dbms.get(_is_in_admin_mode_literal))
+        current_app.logger.debug(f'get_is_in_insert_badge_mode(): {is_in_admin_mode}')
+        return is_in_admin_mode
 
 def set_is_in_insert_badge_mode(set_to: bool):
     with fetch_dbm() as dbms:
