@@ -2,13 +2,10 @@
 Controller for the App Loop Logic that constantly monitors the RFID-Sensor for changes.
 """
 import time
-
 from flask import Flask, current_app
-import multiprocessing
 from . import relay_controller, db_controller, rfid_controller
 
 app = Flask(__name__)
-
 process = None
 
 
