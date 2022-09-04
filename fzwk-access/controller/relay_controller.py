@@ -13,7 +13,6 @@ else:
     app.logger.debug('We are on the RPi!!!')
     testing_mode = False
     relay_pin = 16
-    GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relay_pin, GPIO.OUT)
 
