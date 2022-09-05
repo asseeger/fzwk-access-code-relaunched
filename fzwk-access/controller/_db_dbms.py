@@ -49,7 +49,7 @@ def get_is_relay_switched_on():
 
 
 def set_is_relay_switched_on(is_switched_on: bool):
-    app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
+    # app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
     # with dbm.open(_dbm_store_location, 'c') as dbms:
     #     current_app.logger.debug('writing to dbm')
     #     is_switched_on_string = str(is_switched_on)
