@@ -7,21 +7,24 @@ from flask import Flask
 from . import relay_controller, db_controller, rfid_controller
 
 app = Flask(__name__)
-process = None
 process_name = 'app_loop'
 
 
-def has_app_loop_process():
-    processes = multiprocessing.active_children()
-    app.logger.debug('Active processes:')
-    for this_process in processes:
-        app.logger.debug(this_process.name)
+# def has_app_loop_process():
+#     processes = multiprocessing.active_children()
+#     app.logger.debug('Active processes:')
+#     for this_process in processes:
+#         app.logger.debug(this_process.name)
+
 
 def start_app_loop():
     # TODO: this does not seem to work
-    has_app_loop_process()
-    global process
-    if process is None:
+    process_active = False
+    for process in multiprocessing.active_children():
+        if process.name == process_name:
+            process_active = True
+            break
+    if process_active:
         app.logger.debug('Starting the app loop.')
         db_controller.set_is_app_loop_running(True)
 
@@ -32,10 +35,10 @@ def start_app_loop():
 
 
 def stop_app_loop():
-    global process
     app.logger.debug('Stopping the app loop.')
     db_controller.set_is_app_loop_running(False)
-    process = None
+    for process in multiprocessing.active_children():
+        process.kill()
 
 
 def toggle_app_loop():
