@@ -24,7 +24,7 @@ def start_app_loop():
         if process.name == process_name:
             process_active = True
             break
-    if process_active:
+    if not process_active:
         app.logger.debug('Starting the app loop.')
         db_controller.set_is_app_loop_running(True)
 
