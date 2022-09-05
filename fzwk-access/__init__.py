@@ -51,9 +51,9 @@ def create_app(test_config=None):
     # app_loop_controller.start_app_loop()
     # app.logger.debug('Application Start.')
 
-    from .routes import api
-    api.toggleRunLoop()
-    app.logger.debug('Application Start.')
+        from .routes import api
+        api.toggleRunLoop()
+        app.logger.debug('Application Start.')
 
     app.register_blueprint(api.api_bp)
 
