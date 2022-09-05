@@ -67,7 +67,7 @@ def get_current_badge():
 
 def set_current_badge(badge_id):
     with dbm.open(_dbm_store_location, 'c') as dbms:
-        dbms[_current_badge_literal] = badge_id
+        dbms[_current_badge_literal] = str(badge_id)
 
 
 def get_current_person():
@@ -80,7 +80,7 @@ def get_current_person():
 
 def set_current_person(person_id):
     with dbm.open(_dbm_store_location, 'c') as dbms:
-        dbms[_current_person_literal] = person_id
+        dbms[_current_person_literal] = str(person_id)
 
 
 def get_is_in_admin_mode():
