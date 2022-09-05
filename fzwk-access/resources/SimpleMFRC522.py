@@ -1,14 +1,9 @@
 # Code by Simon Monk https://github.com/simonmonk/
 
 import mfrc522
-import RPi.GPIO as GPIO
-import logging
 from flask import Flask
 
-logging.basicConfig(format='%(asctime)s %(name)s %(levelname)s %(message)s',
-                    level=logging.DEBUG)
 app = Flask(__name__)
-logger = app.logger
 
 
 class SimpleMFRC522:
@@ -34,11 +29,11 @@ class SimpleMFRC522:
 
     def read_id_no_block(self):
         (status, TagType) = self.READER.MFRC522_Request(self.READER.PICC_REQIDL)
-        logger.debug('Status is %s' % status)
+        app.logger.debug(f'Status is {status}')
         if status != self.READER.MI_OK:
             return None
         (status, uid) = self.READER.MFRC522_Anticoll()
-        logger.debug('Status is %s' % status)
+        app.logger.debug(f'Status is {status}')
         if status != self.READER.MI_OK:
             return None
         return self.uid_to_num(uid)
