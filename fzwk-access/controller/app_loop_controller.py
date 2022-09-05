@@ -83,24 +83,24 @@ def app_loop():
         if badge_id is None:
             badge_id = rfid_controller.reader.read_id_no_block()
             if badge_id is None:
-                app.logger.logToConsole('no chip present')
+                app.logger.debug('no chip present')
                 if relay_controller.is_switched_on():
                     relay_controller.switch_off()
                     # db_controller.writeToLog('Deactivating.',
                                                  # person=self.currentPerson, badgeId=self.currentBadge)
         else:
-            app.logger.logToConsole('Badge id: %i' % badge_id)
+            app.logger.debuglogToConsole('Badge id: %i' % badge_id)
             isValid, person = db_controller.is_badge_valid(badge_id)
             if isValid:
                 currentBadge = badge_id
                 currentPerson = person
-                app.logger.logToConsole('Valid: activating')
+                app.logger.debuglogToConsole('Valid: activating')
                 # db_controller.writeToLog('Activating.',
                 #                              person=self.currentPerson, badgeId=self.currentBadge)
                 if not relay_controller.is_switched_on():
                     relay_controller.switch_on()
             else:
-                app.logger.logToConsole('Invalid: not activating')
+                app.logger.debuglogToConsole('Invalid: not activating')
                 # self.dbController.writeToLog('Invalid badge: %s.' % (badge_id), badgeId=10000)
                 if relay_controller.is_switched_on():
                     relay_controller.switch_off()
