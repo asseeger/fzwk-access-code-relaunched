@@ -23,37 +23,22 @@ def fetch_dbm():
 def get_is_app_loop_running():
     app.logger.debug('get_is_app_loop_running(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        # is_app_loop_running = bool(dbms.get(_is_app_loop_running_literal))
         is_app_loop_running = get_bool_from_key(_is_app_loop_running_literal)
         app.logger.debug(f'get_is_app_loop_running(): is_app_loop_running = {is_app_loop_running}')
         return is_app_loop_running
 
 
 def set_is_app_loop_running(is_running: bool):
-    # with dbm.open(_dbm_store_location, 'c') as dbms:
-        # dbms[_is_app_loop_running_literal] = str(is_running)
     set_bool_to_key(is_running, _is_app_loop_running_literal)
 
 
 def get_is_relay_switched_on():
-    # app.logger.debug('get_is_relay_switched_on(): entering')
-    # with dbm.open(_dbm_store_location) as dbms:
-        # is_relay_switched_on_string = dbms.get(_is_relay_switched_on_literal)
-        # is_relay_switched_on_string = get_bool_from_key(_is_relay_switched_on_literal)
-        # current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on_string = {is_relay_switched_on_string}')
-        # is_relay_switched_on = bool(is_relay_switched_on_string)
-        # current_app.logger.debug(f'get_is_relay_switched_on(): is_relay_switched_on = {is_relay_switched_on_string}')
-        # return is_relay_switched_on
     is_relay_switched_on = get_bool_from_key(_is_relay_switched_on_literal)
     return is_relay_switched_on
 
 
 def set_is_relay_switched_on(is_switched_on: bool):
     app.logger.debug(f'set_is_relay_switched_on({is_switched_on}): entering')
-    # with dbm.open(_dbm_store_location, 'c') as dbms:
-    #     current_app.logger.debug('writing to dbm')
-    #     is_switched_on_string = str(is_switched_on)
-    #     dbms[_is_relay_switched_on_literal] = is_switched_on_string
     set_bool_to_key(is_switched_on, _is_relay_switched_on_literal)
 
 
@@ -85,34 +70,22 @@ def set_current_person(person_id):
 
 def get_is_in_admin_mode():
     app.logger.debug('get_is_in_admin_mode(): entering')
-    # with dbm.open(_dbm_store_location) as dbms:
-    #     is_in_admin_mode = bool(dbms.get(_is_in_admin_mode_literal))
-    #     current_app.logger.debug(f'get_is_in_admin_mode(): is_in_admin_mode = {is_in_admin_mode}')
-    #     return is_in_admin_mode
     is_in_admin_mode = get_bool_from_key(_is_in_admin_mode_literal)
     return is_in_admin_mode
 
 
 def set_is_in_admin_mode(set_to: bool):
     app.logger.debug(f'set_is_in_admin_mode(set_to: {set_to}): entering')
-    # with dbm.open(_dbm_store_location, 'c') as dbms:
-    #     dbms[_is_in_admin_mode_literal] = str(set_to)
     set_bool_to_key(set_to, _is_in_admin_mode_literal)
 
 
 def get_is_in_insert_badge_mode():
     app.logger.debug('get_is_in_insert_badge_mode(): entering')
-    # with fetch_dbm() as dbms:
-    #     is_in_insert_badge_mode = bool(dbms.get(_is_in_insert_badge_mode_literal))
-    #     current_app.logger.debug(f'get_is_in_insert_badge_mode(): {is_in_insert_badge_mode}')
-    #     return is_in_insert_badge_mode
     is_in_insert_badge_mode = get_bool_from_key(_is_in_insert_badge_mode_literal)
     return is_in_insert_badge_mode
 
 
 def set_is_in_insert_badge_mode(set_to: bool):
-    # with fetch_dbm() as dbms:
-    #     dbms[_is_in_insert_badge_mode_literal] = str(set_to)
     set_bool_to_key(set_to, _is_in_insert_badge_mode_literal)
 
 

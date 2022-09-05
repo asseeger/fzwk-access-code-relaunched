@@ -43,28 +43,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # from flask_caching import Cache
-    # config = {
-    #     "DEBUG": True,  # some Flask specific configs
-    #     "CACHE_TYPE": "SimpleCache",  # Flask-Caching related configs
-    #     "CACHE_DEFAULT_TIMEOUT": 300
-    # }
-    # # app = Flask(__name__)
-    # # tell Flask to use the above defined config
-    # app.config.from_mapping(config)
-    # cache = Cache(app)
-
     with app.app_context():
         from .controller import db_controller
         db_controller.init_app(app)
 
         from .controller import app_loop_controller
-        # app_loop_controller.start_app_loop()
-        # app.logger.debug('Application Start.')
-
-    ### Testing the relay controller
-    # from .controller import relay_controller
-    # relay_controller.switch_on()
+        app_loop_controller.start_app_loop()
+        app.logger.debug('Application Start.')
 
     app.register_blueprint(api.api_bp)
 
@@ -82,8 +67,4 @@ def create_app(test_config=None):
         atexit.register(cleanup)
     except:
         test_mode = True
-
-
-
-
     return app

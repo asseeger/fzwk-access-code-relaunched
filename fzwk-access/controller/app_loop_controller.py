@@ -10,13 +10,6 @@ app = Flask(__name__)
 process_name = 'app_loop'
 
 
-# def has_app_loop_process():
-#     processes = multiprocessing.active_children()
-#     app.logger.debug('Active processes:')
-#     for this_process in processes:
-#         app.logger.debug(this_process.name)
-
-
 def start_app_loop():
     process_active = False
     for process in multiprocessing.active_children():
