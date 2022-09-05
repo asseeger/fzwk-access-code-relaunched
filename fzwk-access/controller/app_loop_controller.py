@@ -2,23 +2,28 @@
 Controller for the App Loop Logic that constantly monitors the RFID-Sensor for changes.
 """
 import time
-from flask import Flask, current_app
+import multiprocessing
+from flask import Flask
 from . import relay_controller, db_controller, rfid_controller
 
 app = Flask(__name__)
 process = None
+process_name = 'app_loop'
 
 
 def start_app_loop():
+    global process
     app.logger.debug('Starting the app loop.')
     db_controller.set_is_app_loop_running(True)
-    # TODO: implement start_app_loop()
+    process = multiprocessing.Process(name=process_name, target=app_loop)
+    process.start()
 
 
 def stop_app_loop():
+    global process
     app.logger.debug('Stopping the app loop.')
     db_controller.set_is_app_loop_running(False)
-    # TODO: implement stop_app_loop()
+    process = None
 
 
 def     toggle_app_loop():
