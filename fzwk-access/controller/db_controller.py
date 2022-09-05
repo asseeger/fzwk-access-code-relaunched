@@ -13,7 +13,7 @@ def init_app(app):
 
 
 def is_badge_valid(badge_id):
-    return _db_sqlite.is_badge_valid((badge_id))
+    return _db_sqlite.is_badge_valid(badge_id)
 
 
 def insert_new_badge(badge_id, number: int, first_name, last_name):

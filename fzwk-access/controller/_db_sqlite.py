@@ -55,9 +55,12 @@ def is_badge_valid(badge_id):
             SELECT personId FROM person_badge WHERE badgeId = {}
             """.format(badge_id)
     row = cursor.execute(query).fetchone()
-    if row != None:
+    if row is not None:
         person_id = row['personId']
-        return person_id  # might be none if not found
+        if person_id is not None:
+            return True, person_id  # might be none if not found
+        else:
+            return False, None
 
 
 def log_to_database(message, person_id, badge_id):
