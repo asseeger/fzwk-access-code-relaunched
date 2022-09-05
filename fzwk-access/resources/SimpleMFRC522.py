@@ -1,6 +1,7 @@
 # Code by Simon Monk https://github.com/simonmonk/
 
-import mfrc522
+# import mfrc522
+from . import MFRC522 as mfrc522
 from flask import Flask
 
 app = Flask(__name__)
