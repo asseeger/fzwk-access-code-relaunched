@@ -60,7 +60,7 @@ def set_is_relay_switched_on(is_switched_on: bool):
 def get_current_badge():
     app.logger.debug('get_current_badge(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        current_badge = dbms.get(_current_badge_literal)
+        current_badge = int(dbms.get(_current_badge_literal))
         app.logger.debug(f'get_current_badge(): current_badge = {current_badge}')
         return current_badge
 
@@ -73,7 +73,7 @@ def set_current_badge(badge_id):
 def get_current_person():
     app.logger.debug('get_current_person(): entering')
     with dbm.open(_dbm_store_location) as dbms:
-        current_person = dbms.get(_current_person_literal)
+        current_person = int(dbms.get(_current_person_literal))
         app.logger.debug(f'get_current_badge(): current_person = {current_person}')
         return current_person
 
