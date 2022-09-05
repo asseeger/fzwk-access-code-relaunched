@@ -11,11 +11,20 @@ process = None
 process_name = 'app_loop'
 
 
+def has_app_loop_process():
+    processes = multiprocessing.active_children()
+    app.logger.debug('Active processes:')
+    for this_process in processes:
+        app.logger.debug(this_process.name)
+
 def start_app_loop():
+    # TODO: this does not seem to work
+    has_app_loop_process()
     global process
     if process is None:
         app.logger.debug('Starting the app loop.')
         db_controller.set_is_app_loop_running(True)
+
         process = multiprocessing.Process(name=process_name, target=app_loop)
         process.start()
     else:
