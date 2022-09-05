@@ -90,8 +90,8 @@ def app_loop():
                                                  # person=self.currentPerson, badgeId=self.currentBadge)
         else:
             app.logger.debug('Badge id: %i' % badge_id)
-            isValid, person = db_controller.is_badge_valid(badge_id)
-            if isValid:
+            is_valid = db_controller.is_badge_valid(badge_id)
+            if is_valid:
                 currentBadge = badge_id
                 currentPerson = person
                 app.logger.debug('Valid: activating')
