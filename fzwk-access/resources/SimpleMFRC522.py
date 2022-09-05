@@ -1,10 +1,7 @@
 # Code by Simon Monk https://github.com/simonmonk/
 
-import mfrc522
-# from . import MFRC522 as mfrc522
-from flask import Flask
-
-app = Flask(__name__)
+from . import MFRC522
+import RPi.GPIO as GPIO
 
 
 class SimpleMFRC522:
@@ -14,7 +11,7 @@ class SimpleMFRC522:
     BLOCK_ADDRS = [8, 9, 10]
 
     def __init__(self):
-        self.READER = mfrc522.MFRC522()
+        self.READER = MFRC522()
 
     def read(self):
         id, text = self.read_no_block()
@@ -30,11 +27,9 @@ class SimpleMFRC522:
 
     def read_id_no_block(self):
         (status, TagType) = self.READER.MFRC522_Request(self.READER.PICC_REQIDL)
-        app.logger.debug(f'Status is {status}')
         if status != self.READER.MI_OK:
             return None
         (status, uid) = self.READER.MFRC522_Anticoll()
-        app.logger.debug(f'Status is {status}')
         if status != self.READER.MI_OK:
             return None
         return self.uid_to_num(uid)
