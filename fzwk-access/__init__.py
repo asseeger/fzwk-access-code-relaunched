@@ -54,10 +54,8 @@ def create_app(test_config=None):
     # app.config.from_mapping(config)
     # cache = Cache(app)
 
-
-    with app.app_context():
-        from .controller import db_controller
-        db_controller.init_app(app)
+    from .controller import db_controller
+    db_controller.init_app(app)
 
     from .controller import app_loop_controller
     app_loop_controller.start_app_loop()

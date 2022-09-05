@@ -18,7 +18,6 @@ process_name = 'app_loop'
 
 
 def start_app_loop():
-    # TODO: this does not seem to work
     process_active = False
     for process in multiprocessing.active_children():
         if process.name == process_name:
@@ -77,7 +76,6 @@ def app_loop():
                 relay_controller.switch_off()
                 db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
         time.sleep(1)
-
 
 
 def read_badge():
