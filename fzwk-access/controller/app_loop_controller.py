@@ -13,10 +13,13 @@ process_name = 'app_loop'
 
 def start_app_loop():
     global process
-    app.logger.debug('Starting the app loop.')
-    db_controller.set_is_app_loop_running(True)
-    process = multiprocessing.Process(name=process_name, target=app_loop)
-    process.start()
+    if process is None:
+        app.logger.debug('Starting the app loop.')
+        db_controller.set_is_app_loop_running(True)
+        process = multiprocessing.Process(name=process_name, target=app_loop)
+        process.start()
+    else:
+        app.logger.debug('App loop is already running, no need to start again.')
 
 
 def stop_app_loop():
@@ -26,7 +29,7 @@ def stop_app_loop():
     process = None
 
 
-def     toggle_app_loop():
+def toggle_app_loop():
     app.logger.debug('Toggling the app loop.')
     if db_controller.get_is_app_loop_running():
         stop_app_loop()
