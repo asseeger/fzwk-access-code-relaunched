@@ -62,20 +62,28 @@ def create_app(test_config=None):
     app_loop_controller.start_app_loop()
     app.logger.debug('Application Start.')
 
-    from .controller import relay_controller
-    relay_controller.switch_on()
+    ### Testing the relay controller
+    # from .controller import relay_controller
+    # relay_controller.switch_on()
 
     app.register_blueprint(api.api_bp)
 
     app.app_context()
 
-    import atexit
-    import RPi.GPIO as GPIO
-
     def cleanup():
-        app.logger.debug('Cleanup')
-        GPIO.cleanup()
+        if not test_mode:
+            app.logger.debug('Cleanup')
+            GPIO.cleanup()
 
-    atexit.register(cleanup)
+    try:
+        import atexit
+        import RPi.GPIO as GPIO
+        test_mode = False
+        atexit.register(cleanup)
+    except:
+        test_mode = True
+
+
+
 
     return app
