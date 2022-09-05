@@ -21,7 +21,7 @@ def stop_app_loop():
     # TODO: implement stop_app_loop()
 
 
-def toggle_app_loop():
+def     toggle_app_loop():
     app.logger.debug('Toggling the app loop.')
     if db_controller.get_is_app_loop_running():
         stop_app_loop()
@@ -40,6 +40,7 @@ def app_loop():
     while True:
         badge_id = read_badge()
         if badge_id is None:
+            app.logger.debug('No badge present…')
             if relay_controller.is_switched_on():
                 relay_controller.switch_off()
                 current_badge_id = db_controller.get_current_badge()
