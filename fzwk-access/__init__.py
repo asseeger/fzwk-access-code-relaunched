@@ -59,8 +59,8 @@ def create_app(test_config=None):
         db_controller.init_app(app)
 
         from .controller import app_loop_controller
-        app_loop_controller.start_app_loop()
-        app.logger.debug('Application Start.')
+        # app_loop_controller.start_app_loop()
+        # app.logger.debug('Application Start.')
 
     ### Testing the relay controller
     # from .controller import relay_controller
