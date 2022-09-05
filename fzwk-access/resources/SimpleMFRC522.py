@@ -3,10 +3,12 @@
 import mfrc522
 import RPi.GPIO as GPIO
 import logging
+from flask import Flask
 
 logging.basicConfig(format='%(asctime)s %(name)s %(levelname)s %(message)s',
                     level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+app = Flask(__name__)
+logger = app.logger
 
 
 class SimpleMFRC522:

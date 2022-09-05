@@ -1,4 +1,4 @@
-from flask import Flask, current_app
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -9,11 +9,7 @@ except ModuleNotFoundError:
     app.logger.debug('RPi-Module not found–we are in dev mode.')
 else:
     dev_mode = False
-
-relay_pin = 16
-
-
-if not dev_mode:
+    relay_pin = 16
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relay_pin, GPIO.OUT)
     from ..resources import SimpleMFRC522
