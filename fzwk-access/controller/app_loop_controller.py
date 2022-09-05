@@ -56,28 +56,6 @@ def toggle_admin_mode():
 
 
 def app_loop():
-    # while True:
-    #     badge_id = read_badge()
-    #     if badge_id is None:
-    #         app.logger.debug('No badge present…')
-    #         if relay_controller.is_switched_on():
-    #             relay_controller.switch_off()
-    #             current_badge_id = db_controller.get_current_badge()
-    #             current_person_id = db_controller.get_current_person()
-    #             db_controller.log_to_database('Badge was removed, switching off.', current_person_id, current_badge_id)
-    #     else:
-    #         person_id = db_controller.is_badge_valid(badge_id)
-    #         if person_id is not None:
-    #             db_controller.set_current_badge(badge_id)
-    #             db_controller.set_current_person(person_id)
-    #             db_controller.log_to_database('Badge was inserted, switching on.', badge_id, person_id)
-    #             relay_controller.switch_on()
-    #         else:
-    #             relay_controller.switch_off()
-    #             db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
-    #     app.logger.debug('')
-    #     time.sleep(5)
-
     while True:
         badge_id = rfid_controller.reader.read_id_no_block()
         if badge_id is None:
@@ -86,6 +64,7 @@ def app_loop():
                 app.logger.debug('no chip present')
                 if relay_controller.is_switched_on():
                     relay_controller.switch_off()
+                    # TODO: implement logging the active badge
                     # db_controller.writeToLog('Deactivating.',
                                                  # person=self.currentPerson, badgeId=self.currentBadge)
         else:
@@ -95,6 +74,7 @@ def app_loop():
                 # currentBadge = badge_id
                 # currentPerson = person
                 app.logger.debug('Valid: activating')
+                # TODO: implement logging the now inactive badge
                 # db_controller.writeToLog('Activating.',
                 #                              person=self.currentPerson, badgeId=self.currentBadge)
                 if not relay_controller.is_switched_on():
