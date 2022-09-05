@@ -56,26 +56,56 @@ def toggle_admin_mode():
 
 
 def app_loop():
+    # while True:
+    #     badge_id = read_badge()
+    #     if badge_id is None:
+    #         app.logger.debug('No badge present…')
+    #         if relay_controller.is_switched_on():
+    #             relay_controller.switch_off()
+    #             current_badge_id = db_controller.get_current_badge()
+    #             current_person_id = db_controller.get_current_person()
+    #             db_controller.log_to_database('Badge was removed, switching off.', current_person_id, current_badge_id)
+    #     else:
+    #         person_id = db_controller.is_badge_valid(badge_id)
+    #         if person_id is not None:
+    #             db_controller.set_current_badge(badge_id)
+    #             db_controller.set_current_person(person_id)
+    #             db_controller.log_to_database('Badge was inserted, switching on.', badge_id, person_id)
+    #             relay_controller.switch_on()
+    #         else:
+    #             relay_controller.switch_off()
+    #             db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
+    #     app.logger.debug('')
+    #     time.sleep(5)
+
     while True:
-        badge_id = read_badge()
+        badge_id = rfid_controller.reader.read_id_no_block()
         if badge_id is None:
-            app.logger.debug('No badge present…')
-            if relay_controller.is_switched_on():
-                relay_controller.switch_off()
-                current_badge_id = db_controller.get_current_badge()
-                current_person_id = db_controller.get_current_person()
-                db_controller.log_to_database('Badge was removed, switching off.', current_person_id, current_badge_id)
+            badge_id = rfid_controller.reader.read_id_no_block()
+            if badge_id is None:
+                app.logger.logToConsole('no chip present')
+                if relay_controller.is_switched_on()
+                    relay_controller.switch_off()
+                    # db_controller.writeToLog('Deactivating.',
+                                                 # person=self.currentPerson, badgeId=self.currentBadge)
         else:
-            person_id = db_controller.is_badge_valid(badge_id)
-            if person_id is not None:
-                db_controller.set_current_badge(badge_id)
-                db_controller.set_current_person(person_id)
-                db_controller.log_to_database('Badge was inserted, switching on.', badge_id, person_id)
-                relay_controller.switch_on()
+            app.logger.logToConsole('Badge id: %i' % badge_id)
+            isValid, person = db_controller.is_badge_valid(badge_id)
+            if isValid:
+                currentBadge = badge_id
+                currentPerson = person
+                app.logger.logToConsole('Valid: activating')
+                # db_controller.writeToLog('Activating.',
+                #                              person=self.currentPerson, badgeId=self.currentBadge)
+                if not relay_controller.is_switched_on():
+                    relay_controller.switch_on()
             else:
-                relay_controller.switch_off()
-                db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
-        time.sleep(5)
+                app.logger.logToConsole('Invalid: not activating')
+                # self.dbController.writeToLog('Invalid badge: %s.' % (badge_id), badgeId=10000)
+                if relay_controller.is_switched_on():
+                    relay_controller.switch_off()
+        print()
+        time.sleep(1)
 
 
 def read_badge():
