@@ -84,7 +84,6 @@ def app_loop():
                 # self.dbController.writeToLog('Invalid badge: %s.' % (badge_id), badgeId=10000)
                 if relay_controller.is_switched_on():
                     relay_controller.switch_off()
-        print()
         time.sleep(1)
 
 
