@@ -18,5 +18,4 @@ else:
 
 def read_badge():
     if not dev_mode:
-        # return reader.read_id_no_block()
-        return reader.read_id()
+        return reader.read_id_no_block()
