@@ -89,18 +89,18 @@ def app_loop():
                     # db_controller.writeToLog('Deactivating.',
                                                  # person=self.currentPerson, badgeId=self.currentBadge)
         else:
-            app.logger.debuglogToConsole('Badge id: %i' % badge_id)
+            app.logger.debug('Badge id: %i' % badge_id)
             isValid, person = db_controller.is_badge_valid(badge_id)
             if isValid:
                 currentBadge = badge_id
                 currentPerson = person
-                app.logger.debuglogToConsole('Valid: activating')
+                app.logger.debug('Valid: activating')
                 # db_controller.writeToLog('Activating.',
                 #                              person=self.currentPerson, badgeId=self.currentBadge)
                 if not relay_controller.is_switched_on():
                     relay_controller.switch_on()
             else:
-                app.logger.debuglogToConsole('Invalid: not activating')
+                app.logger.debug('Invalid: not activating')
                 # self.dbController.writeToLog('Invalid badge: %s.' % (badge_id), badgeId=10000)
                 if relay_controller.is_switched_on():
                     relay_controller.switch_off()
