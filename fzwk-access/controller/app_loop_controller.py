@@ -79,7 +79,9 @@ def app_loop():
 
 
 def read_badge():
+    app.logger.debug('read_badge(): entering')
     badge_id = rfid_controller.read_badge()
+    app.logger.debug(f'badge_id is {badge_id}')
     if badge_id is None:
         return None
     else:
