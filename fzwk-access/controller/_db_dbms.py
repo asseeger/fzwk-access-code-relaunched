@@ -125,11 +125,11 @@ def get_bool_from_key(key: str):
     with fetch_dbm() as dbms:
         try:
             value_from_dbms = dbms.get(key)
-            app.logger.debug(f'get_bool_from_key({key}): {value_from_dbms}')
+            # app.logger.debug(f'get_bool_from_key({key}): {value_from_dbms}')
             value_in_int = int(value_from_dbms)
-            app.logger.debug(f'get_bool_from_key({key}): {value_in_int}')
+            # app.logger.debug(f'get_bool_from_key({key}): {value_in_int}')
             value_in_bool = bool(value_in_int)
-            app.logger.debug(f'get_bool_from_key({key}): {value_in_bool}')
+            # app.logger.debug(f'get_bool_from_key({key}): {value_in_bool}')
             value = value_in_bool
         except TypeError:
             value = False

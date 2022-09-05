@@ -68,7 +68,6 @@ def app_loop():
 def read_badge():
     badge_id = rfid_controller.read_badge()
     if badge_id is None:
-        app.logger.debug('No chip present.')
         return None
     else:
         return badge_id
