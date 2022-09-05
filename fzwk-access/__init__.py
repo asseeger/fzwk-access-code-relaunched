@@ -47,8 +47,12 @@ def create_app(test_config=None):
         from .controller import db_controller
         db_controller.init_app(app)
 
-    from .controller import app_loop_controller
-    app_loop_controller.start_app_loop()
+    # from .controller import app_loop_controller
+    # app_loop_controller.start_app_loop()
+    # app.logger.debug('Application Start.')
+
+    from .routes import api
+    api.toggleRunLoop()
     app.logger.debug('Application Start.')
 
     app.register_blueprint(api.api_bp)
