@@ -75,7 +75,7 @@ def app_loop():
             else:
                 relay_controller.switch_off()
                 db_controller.log_to_database('Unknown badge was inserted, switching off.', badge_id, None)
-        time.sleep(1)
+        time.sleep(5)
 
 
 def read_badge():
