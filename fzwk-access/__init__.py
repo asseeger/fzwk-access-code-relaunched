@@ -22,7 +22,7 @@ def create_app(test_config=None):
                 'custom_handler': {
                     'class': 'logging.FileHandler',
                     'formatter': 'default',
-                    'filename': '../api.log'
+                    'filename': 'app.log'
                 }
             },
         'root': {
