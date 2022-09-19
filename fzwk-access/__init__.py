@@ -10,16 +10,24 @@ def create_app(test_config=None):
     dictConfig({
         'version': 1,
         'formatters': {'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+            'format': '[%(asctime)s] api: %(levelname)s in %(module)s: %(message)s',
         }},
-        'handlers': {'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        }},
+        'handlers':
+            {
+                'wsgi': {
+                    'class': 'logging.StreamHandler',
+                    'stream': 'ext://flask.logging.wsgi_errors_stream',
+                    'formatter': 'default'
+                },
+                'custom_handler': {
+                    'class': 'logging.FileHandler',
+                    'formatter': 'default',
+                    'filename': '../api.log'
+                }
+            },
         'root': {
-            'leqvel': 'INFO',
-            'handlers': ['wsgi']
+            'level': 'DEBUG',
+            'handlers': ['wsgi', 'custom_handler']
         }
     })
 
