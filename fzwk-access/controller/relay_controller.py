@@ -15,6 +15,7 @@ else:
     relay_pin = 23
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relay_pin, GPIO.OUT)
+    GPIO.output(relay_pin, GPIO.HIGH)
 
 
 def is_switched_on():

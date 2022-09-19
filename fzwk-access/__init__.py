@@ -18,7 +18,7 @@ def create_app(test_config=None):
             'formatter': 'default'
         }},
         'root': {
-            'level': 'INFO',
+            'leqvel': 'INFO',
             'handlers': ['wsgi']
         }
     })
@@ -43,9 +43,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    with app.app_context():
-        from .controller import db_controller
-        db_controller.init_app(app)
+    # with app.app_context():
+    #     from .controller import db_controller
+    #     db_controller.init_app(app)
 
 
     ### As all attempts to initiate the app loop from here in a consistent way failed,
