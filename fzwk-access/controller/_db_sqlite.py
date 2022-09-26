@@ -102,3 +102,11 @@ def fetch_badges():
     result = [dict(row) for row in result]
     current_app.logger.debug(f"Query result is: {result}")
     return result
+
+
+def fetch_badge_persons():
+    #TODO: implement
+    cursor = get_db().cursor()
+    query = """
+    
+    """

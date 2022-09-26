@@ -7,11 +7,11 @@ from ..controller import app_loop_controller, db_controller, relay_controller
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
+
 @api_bp.route('/')
 def api_home():
     """Returns just a 204 code for any api consumer to check for a valid connection."""
     return make_response('', 204)
-
 
 
 def fetch_current_state():
@@ -39,7 +39,7 @@ def status():
 
 
 @api_bp.route('/toggleRunLoop')
-def toggleRunLoop():
+def toggle_run_loop():
     app_loop_controller.toggle_app_loop()
     return make_response(jsonify(fetch_current_state()), 200)
 
@@ -90,8 +90,9 @@ def toggle_insert_badge_mode():
     db_controller.set_is_in_insert_badge_mode(set_to)
     return make_response(jsonify(fetch_current_state()), 200)
 
-@api_bp.route('insertBadge', methods=['POST'])
-def insert_badge():
+
+@api_bp.route('insertBadgePerson', methods=['POST'])
+def insert_badge_person():
     if not db_controller.get_is_in_admin_mode() and not db_controller.get_is_in_insert_badge_mode():
         return make_response('Der Server ist weder im Admin- noch im Badge-Insert-Modus.', 400)
     elif not db_controller.get_is_in_admin_mode():
@@ -134,3 +135,9 @@ def badge(suffix):
         return make_response(jsonify(response), 200)
     else:
         return make_response(f'Route /badge{suffix} is not implemented.', 404)
+
+
+@api_bp.route('/badgePersons')
+def badge_persons():
+    current_app.logger.debug('Calling /badgePersons')
+    content = db_controller.fetch_badge_persons()

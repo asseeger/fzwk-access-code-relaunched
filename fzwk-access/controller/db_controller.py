@@ -8,6 +8,7 @@ from . import _db_sqlite, _db_dbms
 
 app = Flask(__name__)
 
+
 def init_app(app):
     _db_sqlite.init_app(app)
 
@@ -23,6 +24,11 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
 def fetch_badges():
     app.logger.debug('Fetch Badges')
     return _db_sqlite.fetch_badges()
+
+
+def fetch_badge_persons():
+    app.logger.debug('Fetch badges and their persons')
+    return _db_sqlite.fetch_badge_persons()
 
 
 def log_to_database(message, person_id, badge_id):
