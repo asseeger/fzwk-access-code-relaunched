@@ -88,6 +88,7 @@ def toggle_insert_badge_mode():
     else:
         set_to = True
     db_controller.set_is_in_insert_badge_mode(set_to)
+    current_app.logger.debug(f'Is in insert_badge_mode: {db_controller.get_is_in_insert_badge_mode()}')
     return make_response(jsonify(fetch_current_state()), 200)
 
 
