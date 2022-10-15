@@ -114,7 +114,7 @@ def insert_badge_person():
         badge_id = content['badge']['number']
         first_name = content['person']['firstName']
         last_name = content['person']['lastName']
-        number = content['number']
+        number = content['badge']['number']
 
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
         return make_response('', 204)
