@@ -77,6 +77,10 @@ def log_to_database(message, person_id, badge_id):
 
 def insert_new_badge(badge_id, number: int, first_name, last_name):
     """Insert the given badge into the table as allowed. Also registers the given persn."""
+    current_app.logger.debug('Entering _db_sqlite..insert_new_badge()')
+    current_app.logger.debug('badge_id: {badge_id}, number:{number}, first_name: {first_name}, last_name: {last_name}')
+    current_app.logger.debug('*****************************')
+
     cursor = get_db().cursor()
     script = f"""
     INSERT INTO badge (id,  isAssigned, number) 
