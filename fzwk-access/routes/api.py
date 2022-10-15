@@ -118,7 +118,10 @@ def insert_badge_person():
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
         return make_response('', 204)
     except:
-        return make_response('Seems like parsing failed…', 430)
+        message = 'Seems like parsing failed…'
+        current_app.logger.debug(message)
+        current_app.logger.debug(request.headers)
+        return make_response(message, 430)
 
 @api_bp.route('/badg<path:suffix>')
 def badge(suffix):
