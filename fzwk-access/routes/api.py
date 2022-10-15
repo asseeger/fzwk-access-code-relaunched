@@ -93,6 +93,7 @@ def toggle_insert_badge_mode():
 
 @api_bp.route('insertBadgePerson', methods=['POST'])
 def insert_badge_person():
+    current_app.logger.debug('insert_badge_person(): Entering')
     content = request.json
     current_app.logger.debug(f"Received json with content: {content}")
 
