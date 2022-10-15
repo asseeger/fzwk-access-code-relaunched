@@ -99,15 +99,15 @@ def insert_badge_person():
     if not db_controller.get_is_in_admin_mode() and not db_controller.get_is_in_insert_badge_mode():
         message = 'Der Server ist weder im Admin- noch im Badge-Insert-Modus.'
         current_app.logger.debug(message)
-        return make_response(message, 400)
+        return make_response(message, 427)
     elif not db_controller.get_is_in_admin_mode():
         message = 'Der Server ist nicht im Admin-Modus.'
         current_app.logger.debug(message)
-        return make_response(message, 400)
+        return make_response(message, 428)
     elif not db_controller.get_is_in_insert_badge_mode():
         message = 'Der Server ist nicht im Badge-Insert-Modus.'
         current_app.logger.debug(message)
-        return make_response(message, 400)
+        return make_response(message, 429)
 
     badge_id = content['badgeId']
     first_name = content['firstName']
