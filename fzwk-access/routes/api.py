@@ -100,15 +100,15 @@ def insert_badge_person():
         if not db_controller.get_is_in_admin_mode() and not db_controller.get_is_in_insert_badge_mode():
             message = 'Der Server ist weder im Admin- noch im Badge-Insert-Modus.'
             current_app.logger.debug(message)
-            return make_response(message, 427)
+            return make_response(message, 400)
         elif not db_controller.get_is_in_admin_mode():
             message = 'Der Server ist nicht im Admin-Modus.'
             current_app.logger.debug(message)
-            return make_response(message, 428)
+            return make_response(message, 400)
         elif not db_controller.get_is_in_insert_badge_mode():
             message = 'Der Server ist nicht im Badge-Insert-Modus.'
             current_app.logger.debug(message)
-            return make_response(message, 429)
+            return make_response(message, 400)
 
         badge_id = content['badgeId']
         first_name = content['firstName']
@@ -117,11 +117,11 @@ def insert_badge_person():
 
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
         return make_response('', 204)
-    except:
-        message = 'Seems like parsing failed…'
+    except Exception as e:
+        message = f'Seems like parsing failed: {e}'
         current_app.logger.debug(message)
         current_app.logger.debug(request.headers)
-        return make_response(message, 430)
+        return make_response(message, 400)
 
 @api_bp.route('/badg<path:suffix>')
 def badge(suffix):
