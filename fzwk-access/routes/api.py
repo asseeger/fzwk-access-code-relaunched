@@ -94,30 +94,31 @@ def toggle_insert_badge_mode():
 @api_bp.route('insertBadgePerson', methods=['POST'])
 def insert_badge_person():
     current_app.logger.debug('insert_badge_person(): Entering')
-    content = request.json
-    current_app.logger.debug(f"Received json with content: {content}")
+    try:
+        content = request.json
+        current_app.logger.debug(f"Received json with content: {content}")
+        if not db_controller.get_is_in_admin_mode() and not db_controller.get_is_in_insert_badge_mode():
+            message = 'Der Server ist weder im Admin- noch im Badge-Insert-Modus.'
+            current_app.logger.debug(message)
+            return make_response(message, 427)
+        elif not db_controller.get_is_in_admin_mode():
+            message = 'Der Server ist nicht im Admin-Modus.'
+            current_app.logger.debug(message)
+            return make_response(message, 428)
+        elif not db_controller.get_is_in_insert_badge_mode():
+            message = 'Der Server ist nicht im Badge-Insert-Modus.'
+            current_app.logger.debug(message)
+            return make_response(message, 429)
 
-    if not db_controller.get_is_in_admin_mode() and not db_controller.get_is_in_insert_badge_mode():
-        message = 'Der Server ist weder im Admin- noch im Badge-Insert-Modus.'
-        current_app.logger.debug(message)
-        return make_response(message, 427)
-    elif not db_controller.get_is_in_admin_mode():
-        message = 'Der Server ist nicht im Admin-Modus.'
-        current_app.logger.debug(message)
-        return make_response(message, 428)
-    elif not db_controller.get_is_in_insert_badge_mode():
-        message = 'Der Server ist nicht im Badge-Insert-Modus.'
-        current_app.logger.debug(message)
-        return make_response(message, 429)
+        badge_id = content['badgeId']
+        first_name = content['firstName']
+        last_name = content['lastName']
+        number = content['number']
 
-    badge_id = content['badgeId']
-    first_name = content['firstName']
-    last_name = content['lastName']
-    number = content['number']
-
-    db_controller.insert_new_badge(badge_id, number, first_name, last_name)
-    return make_response('', 204)
-
+        db_controller.insert_new_badge(badge_id, number, first_name, last_name)
+        return make_response('', 204)
+    except:
+        return make_response('Seems like parsing failed…', 430)
 
 @api_bp.route('/badg<path:suffix>')
 def badge(suffix):
