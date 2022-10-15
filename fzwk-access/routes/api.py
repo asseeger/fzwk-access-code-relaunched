@@ -65,12 +65,14 @@ def toggle_admin_mode():
     is_in_admin_mode = db_controller.get_is_in_admin_mode()
     current_app.logger.debug(f'toggle_admin_mode(): is_in_admin_mode = {is_in_admin_mode}')
     if is_in_admin_mode:
-        set_to = False
+        db_controller.set_is_in_admin_mode(False)
     else:
-        set_to = True
-    db_controller.set_is_in_admin_mode(set_to)
+        db_controller.set_is_in_admin_mode(True)
     current_app.logger.debug('toggle_admin_mode(): exiting')
     current_app.logger.debug('****************************')
+
+    # Resetting insert badge mode in case the admin mode was not switched off properly before
+    db_controller.set_is_in_insert_badge_mode(False)
     return make_response(jsonify(fetch_current_state()), 200)
 
 
@@ -112,9 +114,9 @@ def insert_badge_person():
             return make_response(message, 400)
 
         badge_id = content['badge']['number']
+        number = content['badge']['number']
         first_name = content['person']['firstName']
         last_name = content['person']['lastName']
-        number = content['badge']['number']
 
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
         return make_response('', 204)
