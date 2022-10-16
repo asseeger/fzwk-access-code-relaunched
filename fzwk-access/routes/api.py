@@ -120,9 +120,10 @@ def insert_badge_person():
         current_app.logger.debug(f'badge_id: {badge_id}, number:{number}, first_name: {first_name}, last_name: {last_name}')
 
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
+        toggle_insert_badge_mode()
         return make_response('', 204)
     except Exception as e:
-        message = f'Seems like parsing failed: {e}'
+        message = f'There was an error: {e}'
         current_app.logger.debug(message)
         current_app.logger.debug(request.headers)
         return make_response(message, 400)
@@ -138,8 +139,7 @@ def badge(suffix):
     current_app.logger.debug(f"Calling /badge{suffix}")
     if suffix == 'es':
         content = db_controller.fetch_badges()
-        json_content = json.dumps(content)
-        current_app.logger.debug(f"Content is: {json_content}")
+        current_app.logger.debug(f"Content is: {json.dumps(content)}")
         return jsonify(content)
     elif suffix == 'e':
         current_badge = db_controller.get_current_badge()
@@ -154,5 +154,13 @@ def badge(suffix):
 
 @api_bp.route('/badgePersons')
 def badge_persons():
-    current_app.logger.debug('Calling /badgePersons')
-    content = db_controller.fetch_badge_persons()
+    try:
+        current_app.logger.debug('Calling /badgePersons')
+        content = db_controller.fetch_badge_persons()
+        current_app.logger.debug(f"Content is: {json.dumps(content)}")
+        return make_response(jsonify(content), 200)
+    except Exception as e:
+        message = f'There was an error: {e}'
+        current_app.logger.debug(message)
+        current_app.logger.debug(request.headers)
+        return make_response(message, 400)

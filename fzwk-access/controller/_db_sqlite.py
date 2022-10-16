@@ -100,7 +100,8 @@ def fetch_badges():
     cursor = get_db().cursor()
     # TODO: change this query to fetch currently active badges _with_ the attached person's name
     query = """
-    SELECT * FROM badge
+    SELECT badge.*, person.* FROM badge, person
+    WHERE badge
     """
     result = cursor.execute(query).fetchall()
     result = [dict(row) for row in result]
@@ -109,8 +110,15 @@ def fetch_badges():
 
 
 def fetch_badge_persons():
-    #TODO: implement
+    """Returns all badges and persons found in the db"""
     cursor = get_db().cursor()
     query = """
-    
+    SELECT badge.*, person.* from badge 
+    JOIN person_badge ON badge.id = person_badge.badgeId 
+    JOIN person ON person_badge.personId = person.id
     """
+    current_app.logger.debug(f'Query is: {query}')
+    result = cursor.execute(query).fetchall()
+    result = [dict(row) for row in result]
+    current_app.logger.debug(f'Query result is: {result}')
+    return result
