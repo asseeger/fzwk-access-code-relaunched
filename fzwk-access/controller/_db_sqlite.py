@@ -122,3 +122,13 @@ def fetch_badge_persons():
     result = [dict(row) for row in result]
     current_app.logger.debug(f'Query result is: {result}')
     return result
+
+
+def delete_badge(badge_id):
+    cursor = get_db().cursor()
+    query_delete_person = f'''
+    DELETE p 
+    FROM person p
+    LEFT JOIN badge_person bp ON bp.badgeId = {badge_id}
+    WHERE 
+    '''

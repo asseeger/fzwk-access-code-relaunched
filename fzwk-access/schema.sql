@@ -48,8 +48,9 @@ CREATE TABLE person_badge (
   personId INTEGER UNIQUE NOT NULL,
   badgeId INTEGER UNIQUE NOT NULL,
   PRIMARY KEY (personId, badgeId),
-  FOREIGN KEY (personId) REFERENCES person(id),
-  FOREIGN KEY (badgeId) REFERENCES badge(id)
+  CONSTRAINT badgeId_fk FOREIGN KEY (personId) REFERENCES person(id),
+  CONSTRAINT personId_fk FOREIGN KEY (badgeId) REFERENCES badge(id),
+  ON DELETE CASCADE
 );
 ---- INSERT INTO PersonBadge
 INSERT INTO person_badge VALUES

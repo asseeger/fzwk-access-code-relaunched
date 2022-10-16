@@ -48,12 +48,12 @@ def create_app(test_config=None):
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    except OSError as e:
+        app.logger.debug(e)
 
     # with app.app_context():
-    #     from .controller import db_controller
-    #     db_controller.init_app(app)
+    from .controller import db_controller
+    db_controller.init_app(app)
 
 
     ### As all attempts to initiate the app loop from here in a consistent way failed,

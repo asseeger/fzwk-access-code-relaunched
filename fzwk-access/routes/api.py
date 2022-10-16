@@ -128,7 +128,7 @@ def insert_badge_person():
         current_app.logger.debug(request.headers)
         return make_response(message, 400)
 
-@api_bp.route('/badg<path:suffix>')
+@api_bp.route('/badg<path:suffix>', methods = ['POST', 'GET', 'DELETE'])
 def badge(suffix):
     """
     Implements the /badge* family
@@ -142,12 +142,16 @@ def badge(suffix):
         current_app.logger.debug(f"Content is: {json.dumps(content)}")
         return jsonify(content)
     elif suffix == 'e':
-        current_badge = db_controller.get_current_badge()
-        current_app.logger.debug(f'Current badge is: {current_badge}')
-        response = {
-            "current_badge": current_badge
-        }
-        return make_response(jsonify(response), 200)
+        if request.method == 'GET':
+            current_badge = db_controller.get_current_badge()
+            current_app.logger.debug(f'Current badge is: {current_badge}')
+            response = {
+                "current_badge": current_badge
+            }
+            return make_response(jsonify(response), 200)
+        elif request.method == 'DELETE':
+            badge_id = request.json['id']
+            db_controller.delete_badge(badge_id)
     else:
         return make_response(f'Route /badge{suffix} is not implemented.', 404)
 

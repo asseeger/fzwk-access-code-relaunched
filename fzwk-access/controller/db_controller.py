@@ -34,6 +34,10 @@ def fetch_badge_persons():
     return _db_sqlite.fetch_badge_persons()
 
 
+def delete_badge(badge_id):
+    _db_sqlite.delete_badge(badge_id)
+
+
 def log_to_database(message, person_id, badge_id):
     app.logger.debug(f"Message: {message}, personId: {person_id}, badgeId: {badge_id}")
     _db_sqlite.log_to_database(message, person_id, badge_id)
