@@ -113,10 +113,11 @@ def insert_badge_person():
             current_app.logger.debug(message)
             return make_response(message, 400)
 
-        badge_id = content['badge']['number']
+        badge_id = content['badge']['id']
         number = content['badge']['number']
         first_name = content['person']['firstName']
         last_name = content['person']['lastName']
+        current_app.logger.debug(f'badge_id: {badge_id}, number:{number}, first_name: {first_name}, last_name: {last_name}')
 
         db_controller.insert_new_badge(badge_id, number, first_name, last_name)
         return make_response('', 204)
