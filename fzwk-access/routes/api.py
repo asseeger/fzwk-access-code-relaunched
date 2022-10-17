@@ -136,7 +136,7 @@ def badge(suffix):
     :return: json response with according http code
     """
     current_app.logger.debug(f'Suffix is {suffix}')
-    current_app.logger.debug(f"Calling /badge{suffix}")
+    current_app.logger.debug(f"Calling /badg{suffix}")
     current_app.logger.debug(f"Request content is: {request.json}")
     if suffix == 'es':
         content = db_controller.fetch_badges()

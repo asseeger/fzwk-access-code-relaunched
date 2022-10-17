@@ -127,6 +127,9 @@ def fetch_badge_persons():
 def delete_badge(badge_id):
     try:
         cursor = get_db().cursor()
+        # Enabling cascade on delete
+        stmt = 'PRAGMA foreign_keys = ON`
+        cursor.execute(stmt)
         # Deleting from person_badge should suffice because of sql constraints and delete cascading
         query = f'''
         DELETE
