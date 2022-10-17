@@ -54,25 +54,18 @@ def create_app(test_config=None):
     # with app.app_context():
     from .controller import db_controller
     db_controller.init_app(app)
-
+    app.register_blueprint(api.api_bp)
+    app.app_context()
 
     ### As all attempts to initiate the app loop from here in a consistent way failed,
     ### I am resorting to making a curl call instead upon starting the app:
     ### `curl http://localhost:5001/api/toggleRunLoop`
-    # from .controller import app_loop_controller
 
-    # app.logger.debug('Application Start.')
-
-
-
-    app.register_blueprint(api.api_bp)
-
-    app.app_context()
-
-    import requests
-    app.logger.debug("Starting app loop")
-    response = requests.get('http://localhost:5001/api/toggleRunLoop')
-    app.logger.debug(f'Response on starting app loop: {response}')
+    #This does not seem to work neither–trying to resolve this by altering the service script
+    # import requests
+    # app.logger.debug("Starting app loop")
+    # response = requests.get('http://localhost:5001/api/toggleRunLoop')
+    # app.logger.debug(f'Response on starting app loop: {response}')
 
     def cleanup():
         if not test_mode:
