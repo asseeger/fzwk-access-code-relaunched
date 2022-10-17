@@ -128,13 +128,7 @@ def delete_badge(badge_id):
     try:
         con = get_db()
         cursor = con.cursor()
-        # Enabling cascade on delete
-        # stmt = 'PRAGMA foreign_keys = ON'
-        # cursor.execute(stmt)
-        # get_db().commit()
-        # Deleting from person_badge should suffice because of sql constraints and delete cascading
-        #TODO: cascading does not seem to work as expected–create stmt that will delete everything!
-        #or us a [trigger](https://stackoverflow.com/questions/40592636/mysql-pdo-on-delete-cascade-not-working)
+        # Deleting from person_badge should suffice because of sql triggers
         stmt = f'''
         DELETE
         FROM person_badge AS pb
