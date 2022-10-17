@@ -129,8 +129,8 @@ def delete_badge(badge_id):
         cursor = get_db().cursor()
         # Deleting from person_badge should suffice because of sql constraints and delete cascading
         query = f'''
-        DELETE pb 
-        FROM person_badge pb
+        DELETE
+        FROM person_badge AS pb
         WHERE pb.badgeId = {badge_id}
         '''
         current_app.logger.debug(f'Query is: {query}')
