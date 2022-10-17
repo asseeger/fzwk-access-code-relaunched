@@ -137,9 +137,10 @@ def badge(suffix):
     """
     current_app.logger.debug(f'Suffix is {suffix}')
     current_app.logger.debug(f"Calling /badge{suffix}")
-    current_app.logger.debug(f"Content is: {json.dumps(content)}")
+    current_app.logger.debug(f"Request content is: {request.json}")
     if suffix == 'es':
         content = db_controller.fetch_badges()
+        current_app.logger.debug(f"Response content is: {json.dumps(content)}")
         return jsonify(content)
     elif suffix == 'e':
         if request.method == 'GET':
