@@ -130,6 +130,7 @@ def delete_badge(badge_id):
         # Enabling cascade on delete
         stmt = 'PRAGMA foreign_keys = ON'
         cursor.execute(stmt)
+        get_db().commit()
         # Deleting from person_badge should suffice because of sql constraints and delete cascading
         query = f'''
         DELETE
@@ -138,5 +139,6 @@ def delete_badge(badge_id):
         '''
         current_app.logger.debug(f'Query is: {query}')
         cursor.execute(query)
+        get_db().commit()
     except Exception as e:
         current_app.logger.debug(e)
