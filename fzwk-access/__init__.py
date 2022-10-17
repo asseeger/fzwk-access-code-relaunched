@@ -60,16 +60,19 @@ def create_app(test_config=None):
     ### I am resorting to making a curl call instead upon starting the app:
     ### `curl http://localhost:5001/api/toggleRunLoop`
     # from .controller import app_loop_controller
-    # app_loop_controller.start_app_loop()
+
     # app.logger.debug('Application Start.')
 
-        # from .routes import api
-        # api.toggleRunLoop()
-        # app.logger.debug('Application Start.')
+
 
     app.register_blueprint(api.api_bp)
 
     app.app_context()
+
+    import requests
+    app.logger.debug("Starting app loop")
+    response = requests.get('http://localhost:5001/api/toggleRunLoop')
+    app.logger.debug(f'Response on starting app loop: {response}')
 
     def cleanup():
         if not test_mode:
