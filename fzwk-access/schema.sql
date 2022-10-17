@@ -35,6 +35,7 @@ CREATE TABLE badge (
   number INTEGER UNIQUE NOT NULL,
   lastDistribution NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
 ---- INSERT INTO Badge
 --INSERT INTO badge (id, isAssigned, number)
 --VALUES
@@ -62,6 +63,23 @@ CREATE TABLE person_badge (
 --  (1001,157125606304),
 --  (1002,584198792543)
 --;
+
+-- [Triggers] --
+-- Delete from associated tables when deleting from the connection table
+CREATE TRIGGER badge_delete_on_person_badge_deletion
+AFTER DELETE
+ON person_badge
+BEGIN
+    DELETE FROM badge WHERE OLD.badgeId = badge.id;
+END
+;
+CREATE TRIGGER person_delete_on_person_badge_deletion
+AFTER DELETE
+ON person_badge
+BEGIN
+    DELETE FROM person WHERE OLD.personId = person.id;
+END
+;
 
 -- [LogEntry] --
 CREATE TABLE logEntry (
