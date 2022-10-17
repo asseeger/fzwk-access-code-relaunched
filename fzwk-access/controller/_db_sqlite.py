@@ -125,9 +125,15 @@ def fetch_badge_persons():
 
 
 def delete_badge(badge_id):
-    cursor = get_db().cursor()
-    query_delete_person = f'''
-    DELETE pb 
-    FROM person_badge pb
-    WHERE pb.badgeId = {badge_id}
-    '''
+    try:
+        cursor = get_db().cursor()
+        # Deleting from person_badge should suffice because of sql constraints and delete cascading
+        query = f'''
+        DELETE pb 
+        FROM person_badge pb
+        WHERE pb.badgeId = {badge_id}
+        '''
+        current_app.logger.debug(f'Query is: {query}')
+        cursor.execute(query)
+    except Exception as e:
+        current_app.logger.debug(e)
