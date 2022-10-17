@@ -85,10 +85,10 @@ def insert_new_badge(badge_id, number: int, first_name, last_name):
     script = f"""
     INSERT INTO badge (id,  isAssigned, number) 
         VALUES ({badge_id}, True, {number});
-    INSERT INTO person (firstname, lastname) 
+    INSERT INTO person (first_name, last_name) 
         VALUES ("{first_name}", "{last_name}");
     INSERT INTO person_badge VALUES
-           ( (SELECT id FROM person WHERE firstname = "{first_name}" AND lastname = "{last_name}"),
+           ( (SELECT id FROM person WHERE first_name = "{first_name}" AND last_name = "{last_name}"),
             {badge_id});
     """
     current_app.logger.debug(f'The script is: {script}')
@@ -127,8 +127,7 @@ def fetch_badge_persons():
 def delete_badge(badge_id):
     cursor = get_db().cursor()
     query_delete_person = f'''
-    DELETE p 
-    FROM person p
-    LEFT JOIN badge_person bp ON bp.badgeId = {badge_id}
-    WHERE 
+    DELETE pb 
+    FROM person_badge pb
+    WHERE pb.badgeId = {badge_id}
     '''
