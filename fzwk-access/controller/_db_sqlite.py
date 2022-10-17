@@ -133,14 +133,14 @@ def delete_badge(badge_id):
         # cursor.execute(stmt)
         # get_db().commit()
         # Deleting from person_badge should suffice because of sql constraints and delete cascading
-        query = f'''
+        stmt = f'''
         PRAGMA foreign_keys = ON;
         DELETE
         FROM person_badge AS pb
         WHERE pb.badgeId = {badge_id};
         '''
-        current_app.logger.debug(f'Query is: {query}')
-        cursor.execute(query)
+        current_app.logger.debug(f'Statement is: {stmt}')
+        cursor.execute(stmt)
         con.commit()
     except Exception as e:
         current_app.logger.debug(e)
