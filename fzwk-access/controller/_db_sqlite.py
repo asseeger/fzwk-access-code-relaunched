@@ -136,10 +136,9 @@ def delete_badge(badge_id):
         #TODO: cascading does not seem to work as expected–create stmt that will delete everything!
         #or us a [trigger](https://stackoverflow.com/questions/40592636/mysql-pdo-on-delete-cascade-not-working)
         stmt = f'''
-        PRAGMA foreign_keys = ON;
         DELETE
         FROM person_badge AS pb
-        WHERE pb.badgeId = {badge_id};
+        WHERE pb.badgeId = {badge_id}
         '''
         current_app.logger.debug(f'Statement is: {stmt}')
         cursor.execute(stmt)
