@@ -17,16 +17,16 @@ DROP TABLE IF EXISTS logEntry;
 -- [Person] --
 CREATE TABLE person (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  firstname TEXT NOT NULL,
-  lastname TEXT NOT NULL
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
 );
 ---- INSERT INTO Person
-INSERT INTO person (firstname, lastname) VALUES
-  ("System", "Admin"),
-  ("Pascal", "Steck"),
-  ("Andreas", "Seeger"),
-  ("Jo", "Stutz")
-;
+--INSERT INTO person (first_name, last_name) VALUES
+--  ("System", "Admin"),
+--  ("Pascal", "Steck"),
+--  ("Andreas", "Seeger"),
+--  ("Jo", "Stutz")
+--;
 
 -- [Badge] --
 CREATE TABLE badge (
@@ -36,12 +36,12 @@ CREATE TABLE badge (
   lastDistribution NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ---- INSERT INTO Badge
-INSERT INTO badge (id, isAssigned, number)
-VALUES
-  (157125606304,false,1),
-  (584198792543,false,2),
-  (279635118494,false,3)
-;
+--INSERT INTO badge (id, isAssigned, number)
+--VALUES
+--  (157125606304,false,1),
+--  (584198792543,false,2),
+--  (279635118494,false,3)
+--;
 
 -- [PersonBadge] --
 CREATE TABLE person_badge (
@@ -58,10 +58,10 @@ CREATE TABLE person_badge (
     ON DELETE CASCADE
 );
 ---- INSERT INTO PersonBadge
-INSERT INTO person_badge VALUES
-  (1001,157125606304),
-  (1002,584198792543)
-;
+--INSERT INTO person_badge VALUES
+--  (1001,157125606304),
+--  (1002,584198792543)
+--;
 
 -- [LogEntry] --
 CREATE TABLE logEntry (
