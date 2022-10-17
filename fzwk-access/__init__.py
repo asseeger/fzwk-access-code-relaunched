@@ -56,6 +56,9 @@ def create_app(test_config=None):
     db_controller.init_app(app)
     app.register_blueprint(api.api_bp)
     app.app_context()
+    db_controller.reset_cache()
+
+
 
     ### As all attempts to initiate the app loop from here in a consistent way failed,
     ### I am resorting to making a curl call instead upon starting the app:

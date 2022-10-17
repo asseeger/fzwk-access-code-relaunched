@@ -13,6 +13,12 @@ def init_app(app):
     _db_sqlite.init_app(app)
 
 
+def reset_cache():
+    """Resets the app's status informations stored in dbm"""
+    _db_dbms.reset_cache()
+
+
+
 def is_badge_valid(badge_id):
     return _db_sqlite.is_badge_valid(badge_id)
 

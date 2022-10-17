@@ -20,6 +20,14 @@ def fetch_dbm():
     return dbm.open(_dbm_store_location, 'c')
 
 
+def reset_cache():
+    """Resets the app's status informations stored in dbm"""
+    set_is_app_loop_running(False)
+    set_is_relay_switched_on(False)
+    set_is_in_admin_mode(False)
+    set_is_in_insert_badge_mode(False)
+
+
 def get_is_app_loop_running():
     app.logger.debug('get_is_app_loop_running(): entering')
     with dbm.open(_dbm_store_location) as dbms:
