@@ -153,6 +153,7 @@ def badge(suffix):
         elif request.method == 'DELETE':
             badge_id = request.json['id']
             db_controller.delete_badge(badge_id)
+            return make_response('', 204)
     else:
         return make_response(f'Route /badge{suffix} is not implemented.', 404)
 
