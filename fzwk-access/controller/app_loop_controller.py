@@ -66,7 +66,10 @@ def app_loop():
                     else:
                         app.logger.debug('no chip present')
                 else:
-                    assert False, 'This block should not be reached …'
+                    # This is part II of above mentioned quirk–if a badge was recognized in the prior loop,
+                    # this else branch is being walked through with no apparent benefit or disadvantage if
+                    # this branch does nothing.
+                    pass
             else:
                 app.logger.debug(f'Badge id: {badge_id}')
                 is_valid, person_id = db_controller.is_badge_valid(badge_id)
