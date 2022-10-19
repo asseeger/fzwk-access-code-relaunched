@@ -83,16 +83,18 @@ def app_loop():
     while True:
         badge_id = rfid_controller.reader.read_id_no_block()
         if badge_id is None:
-            # badge_id = rfid_controller.reader.read_id_no_block()
-            # if badge_id is None:
-            if relay_controller.is_switched_on():
-                app.logger.debug('Chip was removed.')
-                relay_controller.switch_off()
-                person_to_deactivate = db_controller.get_current_person()
-                badge_id_to_deactivate = db_controller.get_current_badge()
-                db_controller.log_to_database('Deactivating.', person_to_deactivate, badge_id_to_deactivate)
-            else:
-                app.logger.debug('no chip present')
+            # Quirk: try again to read–if this is omitted,
+            # the relay will flip-flop (de-)activation while a valid chip is present
+            badge_id = rfid_controller.reader.read_id_no_block()
+            if badge_id is None:
+                if relay_controller.is_switched_on():
+                    app.logger.debug('Chip was removed.')
+                    relay_controller.switch_off()
+                    person_to_deactivate = db_controller.get_current_person()
+                    badge_id_to_deactivate = db_controller.get_current_badge()
+                    db_controller.log_to_database('Deactivating.', person_to_deactivate, badge_id_to_deactivate)
+                else:
+                    app.logger.debug('no chip present')
         else:
             app.logger.debug('Badge id: %i' % badge_id)
             is_valid, person_id = db_controller.is_badge_valid(badge_id)
