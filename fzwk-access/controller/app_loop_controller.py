@@ -96,8 +96,9 @@ def app_loop():
                 else:
                     app.logger.debug('no chip present')
         else:
-            app.logger.debug('Badge id: %i' % badge_id)
+            app.logger.debug(f'Badge id: {badge_id}')
             is_valid, person_id = db_controller.is_badge_valid(badge_id)
+            app.logger.debug(f'The badge is valid: {is_valid}')
             if is_valid:
                 app.logger.debug('Valid: activating')
                 db_controller.log_to_database('Activating.', person_id, badge_id)
