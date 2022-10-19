@@ -48,37 +48,6 @@ def toggle_admin_mode():
         stop_app_loop()
 
 
-### Seemed to have been working as was ###
-# def app_loop():
-#     while True:
-#         badge_id = rfid_controller.reader.read_id_no_block()
-#         if badge_id is None:
-#             badge_id = rfid_controller.reader.read_id_no_block()
-#             if badge_id is None:
-#                 if relay_controller.is_switched_on():
-#                     app.logger.debug('Chip was removed.')
-#                     relay_controller.switch_off()
-#                     person_to_deactivate = db_controller.get_current_person()
-#                     badge_id_to_deactivate = db_controller.get_current_badge()
-#                     db_controller.log_to_database('Deactivating.', person_to_deactivate, badge_id_to_deactivate)
-#                 else:
-#                     app.logger.debug('no chip present')
-#         else:
-#             app.logger.debug('Badge id: %i' % badge_id)
-#             is_valid, person_id = db_controller.is_badge_valid(badge_id)
-#             if is_valid:
-#                 app.logger.debug('Valid: activating')
-#                 db_controller.log_to_database('Activating.', person_id, badge_id)
-#                 if not relay_controller.is_switched_on():
-#                     relay_controller.switch_on()
-#             else:
-#                 app.logger.debug('Invalid: not activating')
-#
-#                 if relay_controller.is_switched_on():
-#                     relay_controller.switch_off()
-#         time.sleep(1)
-
-### Trying to improve app_loop:
 def app_loop():
     while True:
         try:
@@ -97,8 +66,10 @@ def app_loop():
                     else:
                         app.logger.debug('no chip present')
                 else:
+                    app.logger.debug('Inner else loop:')
                     app_loop_process_badge(badge_id)
             else:
+                app.logger.debug('Outer else loop:')
                 app_loop_process_badge(badge_id)
         except Exception as e:
             app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
