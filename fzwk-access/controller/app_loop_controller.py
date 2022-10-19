@@ -97,17 +97,14 @@ def app_loop():
                     else:
                         app.logger.debug('no chip present')
                 else:
-                    app_loop_process_badge()
+                    app_loop_process_badge(badge_id)
             else:
-                app_loop_process_badge()
-        except TypeError as e:
-            app.logger.debug(f'is_valid: {is_valid}')
-            app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
+                app_loop_process_badge(badge_id)
         except Exception as e:
             app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         time.sleep(1)
 
-def app_loop_process_badge():
+def app_loop_process_badge(badge_id):
     app.logger.debug(f'Badge id: {badge_id}')
     is_valid, person_id = db_controller.is_badge_valid(badge_id)
     app.logger.debug(f'The badge is valid: {is_valid}')
