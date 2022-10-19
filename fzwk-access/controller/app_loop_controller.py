@@ -110,6 +110,9 @@ def app_loop():
 
                     if relay_controller.is_switched_on():
                         relay_controller.switch_off()
+        except TypeError as e:
+            app.logger.debug(f'is_valid: {is_valid}')
+            app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         except Exception as e:
             app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         time.sleep(1)
