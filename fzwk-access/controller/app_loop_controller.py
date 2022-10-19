@@ -62,19 +62,19 @@ def app_loop():
                     db_controller.log_to_database('Deactivating.', person_to_deactivate, badge_id_to_deactivate)
                 else:
                     app.logger.debug('no chip present')
-        else:
-            app.logger.debug('Badge id: %i' % badge_id)
-            is_valid, person_id = db_controller.is_badge_valid(badge_id)
-            if is_valid:
-                app.logger.debug('Valid: activating')
-                db_controller.log_to_database('Activating.', person_id, badge_id)
-                if not relay_controller.is_switched_on():
-                    relay_controller.switch_on()
             else:
-                app.logger.debug('Invalid: not activating')
-                # self.dbController.writeToLog('Invalid badge: %s.' % (badge_id), badgeId=10000)
-                if relay_controller.is_switched_on():
-                    relay_controller.switch_off()
+                app.logger.debug('Badge id: %i' % badge_id)
+                is_valid, person_id = db_controller.is_badge_valid(badge_id)
+                if is_valid:
+                    app.logger.debug('Valid: activating')
+                    db_controller.log_to_database('Activating.', person_id, badge_id)
+                    if not relay_controller.is_switched_on():
+                        relay_controller.switch_on()
+                else:
+                    app.logger.debug('Invalid: not activating')
+
+                    if relay_controller.is_switched_on():
+                        relay_controller.switch_off()
         time.sleep(1)
 
 
