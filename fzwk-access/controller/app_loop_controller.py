@@ -81,7 +81,10 @@ def app_loop():
                         relay_controller.switch_on()
                 else:
                     app.logger.debug('Invalid: not activating')
-
+                    #TODO: this is where I can hook into reading/adding badge mode:
+                    # if in add badge mode (dbm)
+                    #    store id of this badge in dbm
+                    # make this value available through api
                     if relay_controller.is_switched_on():
                         relay_controller.switch_off()
         except Exception as e:
