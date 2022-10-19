@@ -100,18 +100,18 @@ def app_loop():
                 app.logger.debug(f'Badge id: {badge_id}')
                 is_valid, person_id = db_controller.is_badge_valid(badge_id)
                 app.logger.debug(f'The badge is valid: {is_valid}')
-                # if is_valid:
-                #     app.logger.debug('Valid: activating')
-                #     db_controller.log_to_database('Activating.', person_id, badge_id)
-                #     if not relay_controller.is_switched_on():
-                #         relay_controller.switch_on()
-                # else:
-                #     app.logger.debug('Invalid: not activating')
-                #
-                #     if relay_controller.is_switched_on():
-                #         relay_controller.switch_off()
+                if is_valid:
+                    app.logger.debug('Valid: activating')
+                    db_controller.log_to_database('Activating.', person_id, badge_id)
+                    if not relay_controller.is_switched_on():
+                        relay_controller.switch_on()
+                else:
+                    app.logger.debug('Invalid: not activating')
+
+                    if relay_controller.is_switched_on():
+                        relay_controller.switch_off()
         except Exception as e:
-            app.logger.debug(e)
+            app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         time.sleep(1)
 
 def read_badge():

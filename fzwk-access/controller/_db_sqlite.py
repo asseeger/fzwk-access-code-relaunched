@@ -60,7 +60,7 @@ def is_badge_valid(badge_id):
         if person_id is not None:
             return True, person_id  # might be none if not found
         else:
-            return False, None
+            return False, -1
 
 
 def log_to_database(message, person_id, badge_id):
