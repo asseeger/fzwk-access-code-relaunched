@@ -50,17 +50,19 @@ def init_app(app):
 
 def is_badge_valid(badge_id):
     """Checks whether the given badge has access and returns the badge's person id if it has."""
+    is_valid = False
+    person_id = -1
     cursor = get_db().cursor()
     query = """
             SELECT personId FROM person_badge WHERE badgeId = {}
             """.format(badge_id)
     row = cursor.execute(query).fetchone()
     if row is not None:
+        is_valid = True
         person_id = row['personId']
         if person_id is not None:
             return True, person_id  # might be none if not found
-        else:
-            return False, -1
+    return is_valid, person_id
 
 
 def log_to_database(message, person_id, badge_id):
