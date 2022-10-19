@@ -96,26 +96,31 @@ def app_loop():
                         db_controller.log_to_database('Deactivating.', person_to_deactivate, badge_id_to_deactivate)
                     else:
                         app.logger.debug('no chip present')
-            else:
-                app.logger.debug(f'Badge id: {badge_id}')
-                is_valid, person_id = db_controller.is_badge_valid(badge_id)
-                app.logger.debug(f'The badge is valid: {is_valid}')
-                if is_valid:
-                    app.logger.debug('Valid: activating')
-                    db_controller.log_to_database('Activating.', person_id, badge_id)
-                    if not relay_controller.is_switched_on():
-                        relay_controller.switch_on()
                 else:
-                    app.logger.debug('Invalid: not activating')
-
-                    if relay_controller.is_switched_on():
-                        relay_controller.switch_off()
+                    app_loop_process_badge()
+            else:
+                app_loop_process_badge()
         except TypeError as e:
             app.logger.debug(f'is_valid: {is_valid}')
             app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         except Exception as e:
             app.logger.debug(f'The exception {type(e).__name__} was raised in the run-loop: {e}')
         time.sleep(1)
+
+def app_loop_process_badge():
+    app.logger.debug(f'Badge id: {badge_id}')
+    is_valid, person_id = db_controller.is_badge_valid(badge_id)
+    app.logger.debug(f'The badge is valid: {is_valid}')
+    if is_valid:
+        app.logger.debug('Valid: activating')
+        db_controller.log_to_database('Activating.', person_id, badge_id)
+        if not relay_controller.is_switched_on():
+            relay_controller.switch_on()
+    else:
+        app.logger.debug('Invalid: not activating')
+
+        if relay_controller.is_switched_on():
+            relay_controller.switch_off()
 
 def read_badge():
     app.logger.debug('read_badge(): entering')
