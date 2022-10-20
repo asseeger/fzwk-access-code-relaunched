@@ -13,8 +13,8 @@ else:
     app.logger.debug('We are on the RPi!!!')
     testing_mode = False
 
-    # Depending on the config, this is 16 or 23
-    relay_pin = 16
+    # Depending on the config/actual connection, this is 16 or 23
+    relay_pin = 23
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relay_pin, GPIO.OUT)
     GPIO.output(relay_pin, GPIO.HIGH)

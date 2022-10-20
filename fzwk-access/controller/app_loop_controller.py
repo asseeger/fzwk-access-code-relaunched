@@ -69,6 +69,8 @@ def app_loop():
                     # This is part II of above mentioned quirk–if a badge was recognized in the prior loop,
                     # this else branch is being walked through with no apparent benefit or disadvantage if
                     # this branch does nothing.
+                    #TODO: it seems as though we land in this branch relatively often–
+                    # check out why
                     pass
             else:
                 app.logger.debug(f'Badge id: {badge_id}')
